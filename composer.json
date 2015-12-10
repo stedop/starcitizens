@@ -1,0 +1,25 @@
+{
+  "name": "stedop/sc_api_wrapper",
+  "description": "An API wrapper for the sc-api.com API.",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Stephen Dop",
+      "email": "dopstephen@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "StarCitizen\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "StarCitizen\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "guzzlehttp/guzzle": "6.1.1"
+  }
+}
