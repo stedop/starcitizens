@@ -14,7 +14,6 @@ class Accounts
     use ClientAwareTrait;
 
     public static function get($id = false) {
-        return "get called";
         if($id === false) {
 
         } else {

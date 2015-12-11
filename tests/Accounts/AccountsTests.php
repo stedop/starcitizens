@@ -10,11 +10,6 @@ use StarCitizen\Accounts\Accounts;
  */
 class AccountsTests extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @covers Accounts::get()
-     * @covers ClientAwareTrait::setupClient
-     * @covers ClientAwareTrait::__callStatic
-     */
     public function testGetAccount()
     {
         $this->assertEquals("get called",Accounts::get());
