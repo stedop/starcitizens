@@ -4,8 +4,16 @@ namespace StarCitizen\Contracts;
 
 use StarCitizen\StarCitizensClient;
 
+/**
+ * Class ClientAwareTrait
+ *
+ * @package StarCitizen\Contracts
+ */
 trait ClientAwareTrait
 {
+    /**
+     * @var bool|StarCitizensClient
+     */
     protected static $client = false;
 
     public static function setupClient()

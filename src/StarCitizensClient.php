@@ -20,6 +20,9 @@ class StarCitizensClient
      */
     private $client;
 
+    /**
+     * StarCitizensClient constructor.
+     */
     public function __construct()
     {
         $this->client = new Client(
@@ -30,14 +33,23 @@ class StarCitizensClient
         );
     }
 
-    public function createRequest($options = [])
+    /**
+     * @param array $params
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function createRequest($params = [])
     {
-        return $this->client->request("GET", "",$options);
+        return $this->client->request("GET", "",$params);
     }
 
-    public function getResult(Request $request)
+    /**
+     * @param array $params
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function getResult($params = [])
     {
-        return $this->client->send($request);
+        return $this->client->send(self::createRequest($params));
     }
-
 }
