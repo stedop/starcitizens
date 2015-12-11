@@ -9,6 +9,15 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false">
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">/src/Accounts</directory>
+            <directory suffix=".php">/src/Contracts</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-clover" target="coverage.xml"/>
+    </logging>
     <testsuites>
         <testsuite name="StarCitizen API Wrapper Test Suite">
             <directory suffix=".php">./tests/</directory>

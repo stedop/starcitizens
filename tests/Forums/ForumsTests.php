@@ -7,7 +7,10 @@ namespace StarCitizen\Tests\Forums;
  *
  * @package Forums;
  */
-class ForumsTests
+class ForumsTests extends \PHPUnit_Framework_TestCase
 {
-
+    public function testForums()
+    {
+        $this->assertTrue(true);
+    }
 }

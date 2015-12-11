@@ -7,7 +7,10 @@ namespace StarCitizen\Tests\Organisations;
  *
  * @package Organisations;
  */
-class OrganisationsTests
+class OrganisationsTests extends \PHPUnit_Framework_TestCase
 {
-
+    public function testOrgs()
+    {
+        $this->assertTrue(true);
+    }
 }
