@@ -62,6 +62,8 @@ class Accounts extends StarCitizenAbstract
             'format' => 'json'
         ];
 
-        return self::$client->getResult($params)->getBody();
+        return new Profile(self::$client->getResult($params)->getBody()->getContents());
+
+
     }
 }
