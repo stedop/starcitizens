@@ -2,16 +2,14 @@
 
 namespace StarCitizen\Accounts;
 
-use StarCitizen\Contracts\ClientAwareTrait;
-
+use StarCitizen\Contracts\StarCitizenAbstract;
 /**
  * Class Accounts
  *
  * @package StarCitizen\Accounts;
  */
-class Accounts
+class Accounts extends StarCitizenAbstract
 {
-    use ClientAwareTrait;
 
     /**
      * @var string
@@ -19,28 +17,25 @@ class Accounts
     protected static $system = "accounts";
 
     /**
-     * @var array
+     * Constants Profile Types
      */
-    protected static $allowedProfileTypes = [
-        "dossier",
-        "forum_profile",
-        "full_profile",
-        "threads",
-        "posts",
-        "memberships"
-    ];
+    const DOSSIER = "dossier";
+    const FORUM = "forum_profile";
+    const FULL = "full_profile";
+    const THREADS = "threads";
+    const POSTS = "posts";
+    const MEMBERSHIPS = "memberships";
 
     /**
-     *
      * @param $id
      * @param string $profile_type
      * @param bool $cache
      *
      * @return \Psr\Http\Message\StreamInterface
      */
-    public static function get($id, $profile_type = "full_profile", $cache = false) {
-
-        $profile_type = ($cache === true)? "full_profile" : $profile_type;
+    private static function get($id, $profile_type = Accounts::FULL, $cache = false)
+    {
+        $profile_type = ($cache === true)? Accounts::FULL : $profile_type;
         $cache = ($cache === true)? "cache" : "live";
 
         $params = [
@@ -52,14 +47,13 @@ class Accounts
             'format' => 'json'
         ];
 
-        ;
         return self::$client->getResult($params)->getBody();
     }
 
     /**
      * @return \Psr\Http\Message\StreamInterface
      */
-    public function getAll()
+    private function getAll()
     {
         $params = [
             'api_source' => "cache",

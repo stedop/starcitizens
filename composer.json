@@ -1,5 +1,5 @@
 {
-  "name": "stedop/sc_api_wrapper",
+  "name": "stedop/starcitizens",
   "description": "An API wrapper for the sc-api.com API.",
   "minimum-stability": "stable",
   "license": "MIT",
