@@ -38,18 +38,9 @@ class StarCitizensClient
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function createRequest($params = [])
-    {
-        return $this->client->request("GET", "",$params);
-    }
-
-    /**
-     * @param array $params
-     *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
     public function getResult($params = [])
     {
-        return $this->client->send(self::createRequest($params));
+        $request = new Request("GET", '?'.http_build_query($params));
+        return $this->client->send($request);
     }
 }
