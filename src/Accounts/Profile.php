@@ -35,8 +35,6 @@ class Profile
     {
         $jsonData = json_decode($jsonData, true);
         var_dump($jsonData);
-        foreach ($jsonData['data'] as $key => $value) {
-            $this->$key = $value;
-        }
+
     }
 }
