@@ -31,9 +31,9 @@ class Accounts extends StarCitizenAbstract
      * @param string $profile_type
      * @param bool $cache
      *
-     * @return \Psr\Http\Message\StreamInterface
+     * @return bool|Profile
      */
-    protected static function get($id, $profile_type = Accounts::FULL, $cache = false)
+    protected static function find($id, $profile_type = Accounts::FULL, $cache = false)
     {
         $profile_type = ($cache === true)? Accounts::FULL : $profile_type;
         $cache = ($cache === true)? "cache" : "live";
@@ -52,22 +52,5 @@ class Accounts extends StarCitizenAbstract
             return new Profile($response['data']);
 
         return false;
-    }
-
-    /**
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    protected function getAll()
-    {
-        $params = [
-            'api_source' => "cache",
-            'system' => self::$system,
-            'action' => "all_accounts",
-            'format' => 'json'
-        ];
-
-        return new Profile(self::$client->getResult($params)->getBody()->getContents());
-
-
     }
 }

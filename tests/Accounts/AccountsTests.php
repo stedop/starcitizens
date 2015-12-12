@@ -13,8 +13,7 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
 {
     public function testGetAccount()
     {
-        $this->assertEquals("get called",Accounts::get("TheMrChance"));
-        $this->setExpectedException("BadFunctionCallException", "functionName doesn't exist in this class, client not checked");
-        Accounts::functionName();
+        $this->assertFalse(Accounts::find("TheMrChance"));
+        $this->assertInstanceOf('StarCitizen\Accounts\Profile', Accounts::find("MrChance"));
     }
 }
