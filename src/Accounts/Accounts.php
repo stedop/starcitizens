@@ -33,7 +33,7 @@ class Accounts extends StarCitizenAbstract
      *
      * @return \Psr\Http\Message\StreamInterface
      */
-    private static function get($id, $profile_type = Accounts::FULL, $cache = false)
+    protected static function get($id, $profile_type = Accounts::FULL, $cache = false)
     {
         $profile_type = ($cache === true)? Accounts::FULL : $profile_type;
         $cache = ($cache === true)? "cache" : "live";
@@ -53,7 +53,7 @@ class Accounts extends StarCitizenAbstract
     /**
      * @return \Psr\Http\Message\StreamInterface
      */
-    private function getAll()
+    protected function getAll()
     {
         $params = [
             'api_source' => "cache",
