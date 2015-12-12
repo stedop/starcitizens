@@ -34,6 +34,7 @@ class Profile
     public function __construct($jsonData)
     {
         $jsonData = json_decode($jsonData, true);
+        var_dump($jsonData);
         foreach ($jsonData['data'] as $key => $value) {
             $this->$key = $value;
         }
