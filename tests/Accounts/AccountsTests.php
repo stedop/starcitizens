@@ -16,4 +16,10 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
         $this->assertFalse(Accounts::find("TheMrChance"));
         $this->assertInstanceOf('StarCitizen\Accounts\Profile', Accounts::find("MrChance"));
     }
+
+    public function testBadMethod()
+    {
+        $this->setExpectedException('BadFunctionCallException', "methodDoesNotExist doesn't exist in this class, client not checked");
+        Accounts::methodDoesNotExist();
+    }
 }

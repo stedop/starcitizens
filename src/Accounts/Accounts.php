@@ -25,23 +25,35 @@ class Accounts extends StarCitizenAbstract
     const THREADS = "threads";
     const POSTS = "posts";
     const MEMBERSHIPS = "memberships";
+    /**
+     * Object Map
+     */
+    const OBJECTS = [
+        Accounts::DOSSIER => 'StarCitizen\Accounts\Profile',
+        Accounts::FORUM => 'StarCitizen\Accounts\Profile',
+        Accounts::FULL => 'StarCitizen\Accounts\Profile',
+        Accounts::THREADS => "Thread",
+        Accounts::POSTS => "",
+        Accounts::MEMBERSHIPS => "",
+    ];
 
     /**
      * @param $id
-     * @param string $profile_type
+     * @param string $profileType
      * @param bool $cache
+     * @param bool $raw
      *
-     * @return bool|Profile
+     * @return bool|mixed
      */
-    protected static function find($id, $profile_type = Accounts::FULL, $cache = false)
+    protected static function find($id, $profileType = Accounts::FULL, $cache = false, $raw = false)
     {
-        $profile_type = ($cache === true)? Accounts::FULL : $profile_type;
+        $profileType = ($cache === true)? Accounts::FULL : $profileType;
         $cache = ($cache === true)? "cache" : "live";
 
         $params = [
             'api_source' => $cache,
             'system' => self::$system,
-            'action' => $profile_type,
+            'action' => $profileType,
             'target_id' => $id,
             'expedite' => '0',
             'format' => 'json'
@@ -49,8 +61,23 @@ class Accounts extends StarCitizenAbstract
 
         $response = json_decode(self::$client->getResult($params)->getBody()->getContents(), true);
         if ($response['request_stats']['query_status'] == "success")
-            return new Profile($response['data']);
+            if ($raw === true)
+                return $response;
+            else
+                return Accounts::fillObject($profileType, $response['data']);
 
         return false;
+    }
+
+    /**
+     * @param $profileType
+     * @param $fillData
+     *
+     * @return mixed
+     */
+    protected static function fillObject($profileType, $fillData)
+    {
+        $object = new \ReflectionClass(Accounts::OBJECTS[$profileType]);
+        return $object->newInstance($fillData);
     }
 }
