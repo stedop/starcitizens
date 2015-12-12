@@ -31,10 +31,10 @@ class Profile
     public $date_added;
     public $last_scrape_date;
 
-    public function __construct($jsonData)
+    public function __construct($profileData)
     {
-        $jsonData = json_decode($jsonData, true);
-        var_dump($jsonData);
-
+        foreach ($profileData as $key => $value) {
+            $this->$key = $value;
+        }
     }
 }

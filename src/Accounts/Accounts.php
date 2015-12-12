@@ -47,7 +47,11 @@ class Accounts extends StarCitizenAbstract
             'format' => 'json'
         ];
 
-        return new Profile(self::$client->getResult($params)->getBody()->getContents());
+        $response = json_decode(self::$client->getResult($params)->getBody()->getContents(), true);
+        if ($response['request_stats']['query_status'] == "success")
+            return new Profile($response['data']);
+
+        return false;
     }
 
     /**
