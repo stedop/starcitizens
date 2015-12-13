@@ -1,12 +1,12 @@
 <?php
-namespace StarCitizen\Accounts;
+
+namespace StarCitizen\Models;
 
 /**
- * Class RSIAccount
+ * Class Profile
  *
- * @package StarCitizen\Accounts;
+ * @package StarCitizen\Models
  */
-
 class Profile
 {
     public $handle;

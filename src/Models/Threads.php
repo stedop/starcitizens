@@ -1,5 +1,6 @@
 <?php
-namespace StarCitizen\Accounts;
+
+namespace StarCitizen\Models;
 
 use ArrayAccess;
 use Countable;
@@ -10,7 +11,7 @@ use ArrayIterator;
 /**
  * Class Threads
  *
- * @package StarCitizen\Accounts;
+ * @package StarCitizen\Models
  */
 class Threads implements ArrayAccess, Countable, IteratorAggregate, Traversable
 {

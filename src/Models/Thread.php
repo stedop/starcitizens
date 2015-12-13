@@ -1,10 +1,10 @@
 <?php
-namespace StarCitizen\Accounts;
+namespace StarCitizen\Models;
 
 /**
  * Class Thread
  *
- * @package StarCitizen\Accounts;
+ * @package StarCitizen\Models
  */
 class Thread
 {
