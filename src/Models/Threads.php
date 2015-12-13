@@ -5,7 +5,6 @@ namespace StarCitizen\Models;
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
-use Traversable;
 use ArrayIterator;
 
 /**
@@ -13,7 +12,7 @@ use ArrayIterator;
  *
  * @package StarCitizen\Models
  */
-class Threads implements ArrayAccess, Countable, IteratorAggregate, Traversable
+class Threads implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * @var array

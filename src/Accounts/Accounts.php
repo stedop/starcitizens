@@ -34,7 +34,7 @@ class Accounts extends StarCitizenAbstract
         Accounts::DOSSIER => '\Profile',
         Accounts::FORUM => '\Profile',
         Accounts::FULL => '\Profile',
-        Accounts::THREADS => '\Thread',
+        Accounts::THREADS => '\Threads',
         Accounts::POSTS => "",
         Accounts::MEMBERSHIPS => "",
     ];
