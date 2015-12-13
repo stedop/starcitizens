@@ -3,6 +3,8 @@
 namespace StarCitizen\Accounts;
 
 use StarCitizen\Base\StarCitizenAbstract;
+use StarCitizen\Models\Profile;
+use StarCitizen\Models\Threads;
 
 /**
  * Class Accounts
@@ -71,5 +73,29 @@ class Accounts extends StarCitizenAbstract
                 return Accounts::fillModel($profileType, $response['data']);
 
         return false;
+    }
+
+    /**
+     * @param $id
+     * @param bool $cache
+     * @param bool $raw
+     *
+     * @return bool|Profile|string
+     */
+    protected static function findProfile($id, $cache = false, $raw = false)
+    {
+        return self::find($id, Accounts::FULL, $cache, $raw);
+    }
+
+    /**
+     * @param $id
+     * @param bool $cache
+     * @param bool $raw
+     *
+     * @return bool|Threads|string
+     */
+    protected static function findThreads($id, $cache = false, $raw = false)
+    {
+        return Accounts::find($id, Accounts::THREADS, $cache, $raw);
     }
 }

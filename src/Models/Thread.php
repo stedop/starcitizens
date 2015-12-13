@@ -17,6 +17,11 @@ class Thread
     public $recent_poster = [];
     public $recent_post;
 
+    /**
+     * Thread constructor.
+     *
+     * @param $threadData
+     */
     public function __construct($threadData)
     {
         foreach ($threadData as $key => $value) {
