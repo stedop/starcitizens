@@ -97,7 +97,7 @@ class Threads implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return bool|Thread
      */
-    function __get($name)
+    public function __get($name)
     {
         return $this->offsetGet($name);
     }
@@ -106,7 +106,7 @@ class Threads implements ArrayAccess, Countable, IteratorAggregate
      * @param $name
      * @param $value
      */
-    function __set($name, $value)
+    public function __set($name, $value)
     {
         $this->offsetSet($name, $value);
     }
