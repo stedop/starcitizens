@@ -2,7 +2,8 @@
 
 namespace StarCitizen\Accounts;
 
-use StarCitizen\Contracts\StarCitizenAbstract;
+use StarCitizen\Base\StarCitizenAbstract;
+
 /**
  * Class Accounts
  *
@@ -25,19 +26,22 @@ class Accounts extends StarCitizenAbstract
     const THREADS = "threads";
     const POSTS = "posts";
     const MEMBERSHIPS = "memberships";
+
     /**
-     * Object Map
+     * Model Map
      */
-    const OBJECTS = [
-        Accounts::DOSSIER => 'StarCitizen\Accounts\Profile',
-        Accounts::FORUM => 'StarCitizen\Accounts\Profile',
-        Accounts::FULL => 'StarCitizen\Accounts\Profile',
-        Accounts::THREADS => "Thread",
+    const MODELS = [
+        Accounts::DOSSIER => '\Profile',
+        Accounts::FORUM => '\Profile',
+        Accounts::FULL => '\Profile',
+        Accounts::THREADS => '\Thread',
         Accounts::POSTS => "",
         Accounts::MEMBERSHIPS => "",
     ];
 
     /**
+     * Find an account information
+     *
      * @param $id
      * @param string $profileType
      * @param bool $cache
@@ -64,20 +68,8 @@ class Accounts extends StarCitizenAbstract
             if ($raw === true)
                 return $response;
             else
-                return Accounts::fillObject($profileType, $response['data']);
+                return Accounts::fillModel($profileType, $response['data']);
 
         return false;
-    }
-
-    /**
-     * @param $profileType
-     * @param $fillData
-     *
-     * @return mixed
-     */
-    protected static function fillObject($profileType, $fillData)
-    {
-        $object = new \ReflectionClass(Accounts::OBJECTS[$profileType]);
-        return $object->newInstance($fillData);
     }
 }

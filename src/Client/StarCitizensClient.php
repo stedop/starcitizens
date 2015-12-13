@@ -1,17 +1,19 @@
 <?php
 
-namespace StarCitizen;
+namespace StarCitizen\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 
 /**
- * Class Client
- * */
+ * Class StarCitizensClient
+ *
+ * @package StarCitizen\Client
+ */
 class StarCitizensClient
 {
     /**
-     *
+     * Base url
      */
     const APIURL =  "http://sc-api.com";
 
@@ -34,6 +36,8 @@ class StarCitizensClient
     }
 
     /**
+     * Gets th result based on the params.
+     *
      * @param array $params
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
