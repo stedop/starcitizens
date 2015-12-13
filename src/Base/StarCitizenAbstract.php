@@ -8,7 +8,6 @@ use StarCitizen\Client\StarCitizensClient;
  * Class ClientAwareTrait
  *
  * @package StarCitizen\Contracts
- * @const MODELS
  */
 abstract class StarCitizenAbstract
 {
@@ -17,10 +16,11 @@ abstract class StarCitizenAbstract
      */
     protected static $client = false;
 
+    const MODELS = [];
     /**
      * Setup the client, this is kind of singleton and anti-patterny but it will work nicely
      */
-    private static function setupClient()
+    protected static function setupClient()
     {
         if (static::$client === false)
             static::$client = new StarCitizensClient();
