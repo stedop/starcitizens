@@ -60,62 +60,32 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
 
     public function testPosts()
     {
-        $post_ids = [];
-
         $posts = Accounts::findPosts("Jethro_E7");
         $this->assertInstanceOf('StarCitizen\Models\Posts', $posts);
         foreach ($posts as $post) {
             $this->assertInstanceOf('StarCitizen\Models\Post', $post);
-            $post_ids[] = $post->post_id;
         }
-
-        // Testing offset exists
-        $this->assertTrue($posts->offsetExists($post_ids[0]));
-
-        // Testing offset get
-        $post = $posts->offsetGet($post_ids[0]);
-        $this->assertInstanceOf('StarCitizen\Models\Post', $post);
-
-        // Testing magic get
-        $post = $posts->$post_ids[0];
-        $this->assertInstanceOf('StarCitizen\Models\Post', $post);
-
-        // Testing magic set
-        $countBeforeAdd = $posts->count();
-        $newThread = clone $post;
-        $newId = '999';
-        $newThread->thread_id = $newId;
-        $posts->$newId = $newThread;
-
-        // Test count
-        $this->assertTrue($countBeforeAdd < count($posts));
-
-        // Test Iterator
-        $iterator = $posts->getIterator();
-        $this->assertInstanceOf('ArrayIterator', $iterator);
-
-        // Test unset
-        $posts->offsetUnset('999');
-        $this->assertFalse($posts->offsetExists('999'));
     }
 
-    public function testCurrying()
+    public function testMagic()
     {
         $account = Accounts::findProfile("jethro_e7");
         $this->assertInstanceOf('StarCitizen\Models\Profile', $account);
 
-        foreach ($account->threads() as $thread) {
+        foreach ($account->threads as $thread) {
             $this->assertInstanceOf('StarCitizen\Models\Thread', $thread);
         }
 
         $this->assertInstanceOf('StarCitizen\Models\Threads', $account->threads);
 
-        foreach ($account->posts() as $post) {
+        foreach ($account->posts as $post) {
             $this->assertInstanceOf('StarCitizen\Models\Post', $post);
         }
 
         $this->assertInstanceOf('StarCitizen\Models\Threads', $account->threads);
         $this->assertInstanceOf('StarCitizen\Models\Posts', $account->posts);
+
+        $this->assertNull($account->notReal);
     }
 
     public function testWith()

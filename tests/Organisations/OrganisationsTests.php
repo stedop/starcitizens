@@ -1,6 +1,7 @@
 <?php
 
 namespace StarCitizen\Tests\Organisations;
+
 use StarCitizen\Organisations\Organisations;
 
 /**
