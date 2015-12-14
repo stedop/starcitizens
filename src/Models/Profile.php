@@ -150,23 +150,31 @@ class Profile
     }
 
     /**
-     * @return bool|Threads|string
+     * @return Threads
      */
     protected function threads()
     {
-        if ($this->threads === null)
-            $this->threads = Accounts::findThreads($this->handle);
+        if ($this->threads === null) {
+            $threads = Accounts::findThreads($this->handle);
+            if ($threads instanceof Threads)
+                $this->threads = $threads;
+        }
+
+
 
         return $this->threads;
     }
 
     /**
-     * @return bool|Posts|string
+     * @return Posts
      */
     protected function posts()
     {
-        if ($this->posts === null)
-            $this->posts = Accounts::findPosts($this->handle);
+        if ($this->posts === null) {
+            $posts = Accounts::findPosts($this->handle);
+            if ($posts instanceof Posts)
+                $this->posts = $posts;
+        }
 
         return $this->posts;
     }
