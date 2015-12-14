@@ -179,7 +179,7 @@ class Profile
     public function with(...$types) {
         foreach ($types as $type) {
             if (method_exists($this, strtolower($type)))
-                call_user_method($type, $this);
+                call_user_func([$this, $type]);
         }
 
         return $this;
@@ -193,7 +193,7 @@ class Profile
     public function __get($name)
     {
         if (in_array($name, $this->magicProperties)) {
-            return call_user_method($name, $this);
+            return call_user_func([$this, $name]);
         }
 
         return null;
