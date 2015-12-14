@@ -150,7 +150,7 @@ class Profile
     }
 
     /**
-     * @return bool|Threads
+     * @return bool|Threads|string
      */
     protected function threads()
     {
@@ -161,7 +161,7 @@ class Profile
     }
 
     /**
-     * @return bool|Posts
+     * @return bool|Posts|string
      */
     protected function posts()
     {
