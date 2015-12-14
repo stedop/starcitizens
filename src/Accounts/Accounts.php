@@ -47,7 +47,7 @@ class Accounts extends StarCitizenAbstract
      */
     public static function findProfile($id, $cache = false, $raw = false)
     {
-        return parent::find($id, Accounts::FULL, $cache, $raw);
+        return self::find($id, Accounts::FULL, $cache, $raw);
     }
 
     /**
@@ -59,7 +59,7 @@ class Accounts extends StarCitizenAbstract
      */
     public static function findThreads($id, $cache = false, $raw = false)
     {
-        return parent::find($id, Accounts::THREADS, $cache, $raw);
+        return self::find($id, Accounts::THREADS, $cache, $raw);
     }
 
     /**
@@ -71,6 +71,6 @@ class Accounts extends StarCitizenAbstract
      */
     public static function findPosts($id, $cache = false, $raw = false)
     {
-        return parent::find($id, Accounts::POSTS, $cache, $raw);
+        return self::find($id, Accounts::POSTS, $cache, $raw);
     }
 }

@@ -39,6 +39,6 @@ class Organisations extends StarCitizenAbstract
      */
     public static function findOrg($id, $cache = false, $raw = false)
     {
-        return static::find($id, Organisations::ORG, $cache, $raw);
+        return self::find($id, Organisations::ORG, $cache, $raw);
     }
 }
