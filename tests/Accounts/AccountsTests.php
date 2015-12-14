@@ -96,12 +96,4 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('jethro_e7', Accounts::findProfile("jethro_e7")->with('posts', 'threads')->handle);
     }
-
-    public function testBadMethod()
-    {
-        $this->setExpectedException('BadFunctionCallException', "methodDoesNotExist doesn't exist in this class, client not checked");
-        Accounts::methodDoesNotExist();
-    }
-
-
 }

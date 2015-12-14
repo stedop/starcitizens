@@ -141,16 +141,12 @@ class Profile
      * Profile constructor.
      *
      * @param $profileData
-     *
-     * @return Profile
      */
     public function __construct($profileData)
     {
         foreach ($profileData as $key => $value) {
             $this->$key = $value;
         }
-
-        return $this;
     }
 
     /**

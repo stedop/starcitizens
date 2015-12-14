@@ -16,34 +16,52 @@ abstract class StarCitizenAbstract
      */
     protected static $client = false;
 
+    protected static $system;
+
     const MODELS = [];
+    const BASEPROFILE = '';
+
     /**
-     * Setup the client, this is kind of singleton and anti-patterny but it will work nicely
+     * Find an account information
+     *
+     * @param $id
+     * @param string $profileType
+     * @param bool $cache
+     * @param bool $raw
+     *
+     * @return bool|mixed
      */
-    protected static function setupClient()
+    protected static function find($id, $profileType, $cache = false, $raw = false)
     {
-        if (static::$client === false)
-            static::$client = new StarCitizensClient();
+        self::setupClient();
+        $cache = ($cache === true)? "cache" : "live";
+
+        $params = [
+            'api_source' => $cache,
+            'system' => static::$system,
+            'action' => $profileType,
+            'target_id' => $id,
+            'expedite' => '0',
+            'format' => 'json'
+        ];
+
+        $response = json_decode(self::$client->getResult($params)->getBody()->getContents(), true);
+        if ($response['request_stats']['query_status'] == "success")
+            if ($raw === true)
+                return $response;
+            else
+                return self::fillModel($profileType, $response['data']);
+
+        return false;
     }
 
     /**
-     * Magic call static, allows us to check that the client is setup and then pass on the call,
-     * saves us having to do this at the start of every function.  Kinda like middleware
-     *
-     * @param $name
-     * @param $arguments
-     *
-     * @return mixed
+     * Setup the client, this is kind of singleton and anti-patterny but it will work nicely
      */
-    public static function __callStatic($name, $arguments)
+    private static function setupClient()
     {
-
-        if (method_exists(get_called_class(), $name)) {
-            static::setupClient();
-            return forward_static_call_array([get_called_class(), $name], $arguments);
-        }
-
-        throw  new \BadFunctionCallException($name . " doesn't exist in this class, client not checked");
+        if (static::$client === false)
+            static::$client = new StarCitizensClient();
     }
 
     /**
