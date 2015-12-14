@@ -23,23 +23,17 @@ class Accounts extends StarCitizenAbstract
     /**
      * Constants Profile Types
      */
-    const DOSSIER = "dossier";
-    const FORUM = "forum_profile";
     const FULL = "full_profile";
     const THREADS = "threads";
     const POSTS = "posts";
-    const MEMBERSHIPS = "memberships";
 
     /**
      * Model Map
      */
     const MODELS = [
-        Accounts::DOSSIER => '\Profile',
-        Accounts::FORUM => '\Profile',
         Accounts::FULL => '\Profile',
         Accounts::THREADS => '\Threads',
         Accounts::POSTS => '\Posts',
-        Accounts::MEMBERSHIPS => '',
     ];
 
     /**

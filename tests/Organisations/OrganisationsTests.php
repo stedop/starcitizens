@@ -1,6 +1,7 @@
 <?php
 
 namespace StarCitizen\Tests\Organisations;
+use StarCitizen\Organisations\Organisations;
 
 /**
  * Class OrganisationsTests
@@ -11,6 +12,7 @@ class OrganisationsTests extends \PHPUnit_Framework_TestCase
 {
     public function testOrgs()
     {
-        $this->assertTrue(true);
+        $this->assertFalse(Organisations::findOrg('notRealOrg'));
+        $this->assertInstanceOf('StarCitizen\Models\Organisation', Organisations::findOrg('salvage'));
     }
 }

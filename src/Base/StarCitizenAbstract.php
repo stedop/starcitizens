@@ -49,14 +49,14 @@ abstract class StarCitizenAbstract
     /**
      * Fills our model in with the provided data
      *
-     * @param $profileType
+     * @param $modelType
      * @param $fillData
      *
      * @return mixed
      */
-    public static function fillModel($profileType, $fillData)
+    public static function fillModel($modelType, $fillData)
     {
-        $object = new \ReflectionClass('StarCitizen\Models' . static::MODELS[$profileType]);
+        $object = new \ReflectionClass('StarCitizen\Models' . static::MODELS[$modelType]);
         return $object->newInstance($fillData);
     }
 }
