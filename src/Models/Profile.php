@@ -1,12 +1,16 @@
 <?php
 
 namespace StarCitizen\Models;
+
 use StarCitizen\Accounts\Accounts;
 
 /**
  * Class Profile
  *
  * @package StarCitizen\Models
+ *
+ * @property Threads $threads
+ * @property Posts$posts
  */
 class Profile
 {
@@ -115,16 +119,23 @@ class Profile
      */
     public $last_scrape_date;
 
+    /**
+     * @var array
+     */
+    private $magicProperties = [
+        'threads',
+        'posts'
+    ];
 
     /**
      * @var Threads
      */
-    protected $threads;
+    private $threads;
 
     /**
      * @var Posts
      */
-    protected $posts;
+    private $posts;
 
     /**
      * Profile constructor.
@@ -143,7 +154,7 @@ class Profile
     }
 
     /**
-     * @return bool|Threads|string
+     * @return bool|Threads
      */
     protected function threads()
     {
@@ -154,7 +165,7 @@ class Profile
     }
 
     /**
-     * @return bool|Posts|string
+     * @return bool|Posts
      */
     protected function posts()
     {
@@ -185,7 +196,7 @@ class Profile
      */
     public function __get($name)
     {
-        if ($name == "posts" || $name == "threads") {
+        if (in_array($name, $this->magicProperties)) {
             return call_user_method($name, $this);
         }
 
