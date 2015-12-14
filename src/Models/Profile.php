@@ -1,6 +1,7 @@
 <?php
 
 namespace StarCitizen\Models;
+use StarCitizen\Accounts\Accounts;
 
 /**
  * Class Profile
@@ -116,14 +117,62 @@ class Profile
 
 
     /**
+     * @var Threads
+     */
+    public $threads;
+
+    /**
+     * @var Posts
+     */
+    public $posts;
+
+    /**
      * Profile constructor.
      *
      * @param $profileData
+     *
+     * @return Profile
      */
     public function __construct($profileData)
     {
         foreach ($profileData as $key => $value) {
             $this->$key = $value;
         }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|Threads|string
+     */
+    public function threads()
+    {
+        $this->threads = Accounts::findThreads($this->handle);
+
+        return $this->threads;
+    }
+
+    /**
+     * @return bool|Posts|string
+     */
+    public function posts()
+    {
+        $this->posts = Accounts::findPosts($this->handle);
+
+        return $this->posts;
+    }
+
+    /**
+     * @param array ...$types
+     *
+     * @return $this
+     */
+    public function with(...$types) {
+        foreach ($types as $type) {
+            if (method_exists($this, strtolower($type)))
+                call_user_method($type, $this);
+        }
+
+        return $this;
     }
 }

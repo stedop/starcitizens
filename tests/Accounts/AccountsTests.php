@@ -99,6 +99,34 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
         $this->assertFalse($posts->offsetExists('999'));
     }
 
+    public function testCurrying()
+    {
+        $account = Accounts::findProfile("jethro_e7");
+        $this->assertInstanceOf('StarCitizen\Models\Profile', $account);
+
+        foreach ($account->threads() as $thread) {
+            $this->assertInstanceOf('StarCitizen\Models\Thread', $thread);
+        }
+
+        $this->assertInstanceOf('StarCitizen\Models\Threads', $account->threads);
+
+        foreach ($account->posts() as $post) {
+            $this->assertInstanceOf('StarCitizen\Models\Post', $post);
+        }
+
+        $this->assertInstanceOf('StarCitizen\Models\Threads', $account->threads);
+        $this->assertInstanceOf('StarCitizen\Models\Posts', $account->posts);
+    }
+
+    public function testWith()
+    {
+        $account = Accounts::findProfile("jethro_e7")->with('posts', 'Threads', 'doesNotExist');
+        $this->assertInstanceOf('StarCitizen\Models\Threads', $account->threads);
+        $this->assertInstanceOf('StarCitizen\Models\Posts', $account->posts);
+
+        $this->assertEquals('jethro_e7', Accounts::findProfile("jethro_e7")->with('posts', 'threads')->handle);
+    }
+
     public function testBadMethod()
     {
         $this->setExpectedException('BadFunctionCallException', "methodDoesNotExist doesn't exist in this class, client not checked");
