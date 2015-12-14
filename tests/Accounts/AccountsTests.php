@@ -21,7 +21,7 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
     {
         $thread_ids = [];
 
-        $threads = Accounts::findThreads("Jethro_E7",Accounts::THREADS);
+        $threads = Accounts::findThreads("Jethro_E7");
         $this->assertInstanceOf('StarCitizen\Models\Threads', $threads);
         foreach ($threads as $thread) {
             $this->assertInstanceOf('StarCitizen\Models\Thread', $thread);
@@ -56,7 +56,47 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
         // Test unset
         $threads->offsetUnset('999');
         $this->assertFalse($threads->offsetExists('999'));
+    }
 
+    public function testPosts()
+    {
+        $post_ids = [];
+
+        $posts = Accounts::findPosts("Jethro_E7");
+        $this->assertInstanceOf('StarCitizen\Models\Posts', $posts);
+        foreach ($posts as $post) {
+            $this->assertInstanceOf('StarCitizen\Models\Post', $post);
+            $post_ids[] = $post->post_id;
+        }
+
+        // Testing offset exists
+        $this->assertTrue($posts->offsetExists($post_ids[0]));
+
+        // Testing offset get
+        $post = $posts->offsetGet($post_ids[0]);
+        $this->assertInstanceOf('StarCitizen\Models\Post', $post);
+
+        // Testing magic get
+        $post = $posts->$post_ids[0];
+        $this->assertInstanceOf('StarCitizen\Models\Post', $post);
+
+        // Testing magic set
+        $countBeforeAdd = $posts->count();
+        $newThread = clone $post;
+        $newId = '999';
+        $newThread->thread_id = $newId;
+        $posts->$newId = $newThread;
+
+        // Test count
+        $this->assertTrue($countBeforeAdd < count($posts));
+
+        // Test Iterator
+        $iterator = $posts->getIterator();
+        $this->assertInstanceOf('ArrayIterator', $iterator);
+
+        // Test unset
+        $posts->offsetUnset('999');
+        $this->assertFalse($posts->offsetExists('999'));
     }
 
     public function testBadMethod()

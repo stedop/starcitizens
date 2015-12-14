@@ -2,23 +2,15 @@
 
 namespace StarCitizen\Models;
 
-use ArrayAccess;
-use Countable;
-use IteratorAggregate;
-use ArrayIterator;
-
 /**
  * Class Threads
  *
  * @package StarCitizen\Models
+ * @method bool|Thread __get($name) magic method. Returns a thread if the id is set
+ * @method bool|Thread offsetGet($offset) Returns a thread if the id is set
  */
-class Threads implements ArrayAccess, Countable, IteratorAggregate
+class Threads extends Store
 {
-    /**
-     * @var array
-     */
-    public $threads = [];
-
     /**
      * Threads constructor.
      *
@@ -31,83 +23,9 @@ class Threads implements ArrayAccess, Countable, IteratorAggregate
         }
     }
 
-    /**
-     * @return ArrayIterator
-     */
-    public function getIterator()
-    {
-        return new ArrayIterator($this->threads);
-    }
-
-    /**
-     * @param mixed $offset
-     *
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        if (array_key_exists($offset, $this->threads))
-            return true;
-
-        return false;
-    }
-
-    /**
-     * @param mixed $offset
-     *
-     * @return bool|Thread
-     */
-    public function offsetGet($offset)
-    {
-        if ($this->offsetExists($offset))
-            return $this->threads[$offset];
-
-        return false;
-    }
-
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
     public function offsetSet($offset, $value)
     {
         if ($value instanceof Thread)
-            $this->threads[$offset] = $value;
-    }
-
-    /**
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
-    {
-        if ($this->offsetExists($offset) && isset($this->threads[$offset]))
-            unset ($this->threads[$offset]);
-    }
-
-    /**
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->threads);
-    }
-
-    /**
-     * @param $name
-     *
-     * @return bool|Thread
-     */
-    public function __get($name)
-    {
-        return $this->offsetGet($name);
-    }
-
-    /**
-     * @param $name
-     * @param $value
-     */
-    public function __set($name, $value)
-    {
-        $this->offsetSet($name, $value);
+            parent::offsetSet($offset, $value);
     }
 }

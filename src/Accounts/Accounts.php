@@ -3,6 +3,7 @@
 namespace StarCitizen\Accounts;
 
 use StarCitizen\Base\StarCitizenAbstract;
+use StarCitizen\Models\Posts;
 use StarCitizen\Models\Profile;
 use StarCitizen\Models\Threads;
 
@@ -37,8 +38,8 @@ class Accounts extends StarCitizenAbstract
         Accounts::FORUM => '\Profile',
         Accounts::FULL => '\Profile',
         Accounts::THREADS => '\Threads',
-        Accounts::POSTS => "",
-        Accounts::MEMBERSHIPS => "",
+        Accounts::POSTS => '\Posts',
+        Accounts::MEMBERSHIPS => '',
     ];
 
     /**
@@ -51,7 +52,7 @@ class Accounts extends StarCitizenAbstract
      *
      * @return bool|mixed
      */
-    protected static function find($id, $profileType = Accounts::FULL, $cache = false, $raw = false)
+    private static function find($id, $profileType = Accounts::FULL, $cache = false, $raw = false)
     {
         $profileType = ($cache === true)? Accounts::FULL : $profileType;
         $cache = ($cache === true)? "cache" : "live";
@@ -70,7 +71,7 @@ class Accounts extends StarCitizenAbstract
             if ($raw === true)
                 return $response;
             else
-                return Accounts::fillModel($profileType, $response['data']);
+                return self::fillModel($profileType, $response['data']);
 
         return false;
     }
@@ -97,5 +98,17 @@ class Accounts extends StarCitizenAbstract
     protected static function findThreads($id, $cache = false, $raw = false)
     {
         return Accounts::find($id, Accounts::THREADS, $cache, $raw);
+    }
+
+    /**
+     * @param $id
+     * @param bool $cache
+     * @param bool $raw
+     *
+     * @return bool|Posts|string
+     */
+    protected static function findPosts($id, $cache = false, $raw = false)
+    {
+        return Accounts::find($id, Accounts::POSTS, $cache, $raw);
     }
 }

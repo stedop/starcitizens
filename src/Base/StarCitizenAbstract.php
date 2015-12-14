@@ -37,6 +37,7 @@ abstract class StarCitizenAbstract
      */
     public static function __callStatic($name, $arguments)
     {
+
         if (method_exists(get_called_class(), $name)) {
             static::setupClient();
             return forward_static_call_array([get_called_class(), $name], $arguments);
