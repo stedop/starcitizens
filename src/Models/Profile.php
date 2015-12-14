@@ -119,12 +119,12 @@ class Profile
     /**
      * @var Threads
      */
-    public $threads;
+    protected $threads;
 
     /**
      * @var Posts
      */
-    public $posts;
+    protected $posts;
 
     /**
      * Profile constructor.
@@ -145,9 +145,10 @@ class Profile
     /**
      * @return bool|Threads|string
      */
-    public function threads()
+    protected function threads()
     {
-        $this->threads = Accounts::findThreads($this->handle);
+        if ($this->threads === null)
+            $this->threads = Accounts::findThreads($this->handle);
 
         return $this->threads;
     }
@@ -155,9 +156,10 @@ class Profile
     /**
      * @return bool|Posts|string
      */
-    public function posts()
+    protected function posts()
     {
-        $this->posts = Accounts::findPosts($this->handle);
+        if ($this->posts === null)
+            $this->posts = Accounts::findPosts($this->handle);
 
         return $this->posts;
     }
@@ -174,5 +176,19 @@ class Profile
         }
 
         return $this;
+    }
+
+    /**
+     * @param $name
+     *
+     * @return mixed|null
+     */
+    public function __get($name)
+    {
+        if ($name == "posts" || $name == "threads") {
+            return call_user_method($name, $this);
+        }
+
+        return null;
     }
 }
