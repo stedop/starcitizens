@@ -3,9 +3,8 @@
 namespace StarCitizen\Accounts;
 
 use StarCitizen\Base\StarCitizenAbstract;
-use StarCitizen\Models\Posts;
 use StarCitizen\Models\Profile;
-use StarCitizen\Models\Threads;
+use StarCitizen\Models\Store;
 
 /**
  * Class Accounts
@@ -32,8 +31,8 @@ class Accounts extends StarCitizenAbstract
      */
     const MODELS = [
         Accounts::FULL => '\Profile',
-        Accounts::THREADS => '\Threads',
-        Accounts::POSTS => '\Posts',
+        Accounts::THREADS => ['\Thread', '', 'thread_id'],
+        Accounts::POSTS => ['\Post', 'post', 'post_id']
     ];
 
     const BASEPROFILE = Accounts::FULL;
@@ -55,7 +54,7 @@ class Accounts extends StarCitizenAbstract
      * @param bool $cache
      * @param bool $raw
      *
-     * @return bool|Threads|string
+     * @return bool|Store||string
      */
     public static function findThreads($id, $cache = false, $raw = false)
     {
@@ -67,7 +66,7 @@ class Accounts extends StarCitizenAbstract
      * @param bool $cache
      * @param bool $raw
      *
-     * @return bool|Posts|string
+     * @return bool|Store|string
      */
     public static function findPosts($id, $cache = false, $raw = false)
     {

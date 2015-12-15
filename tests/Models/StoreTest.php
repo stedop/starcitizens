@@ -3,7 +3,6 @@ namespace StarCitizen\Tests\Models;
 
 use StarCitizen\Accounts\Accounts;
 use StarCitizen\Models\Store;
-use StarCitizen\Models\Posts;
 
 /**
  * Class StoreTest
@@ -13,7 +12,7 @@ use StarCitizen\Models\Posts;
 class StoreTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Posts
+     * @var Store
      */
     public $posts;
 
@@ -24,7 +23,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->posts = $this->posts = Accounts::findPosts("Jethro_E7");
+        $this->posts = Accounts::findPosts("Jethro_E7");
         foreach ($this->posts as $post) {
             $this->post_ids[] = $post->post_id;
         }
@@ -32,11 +31,11 @@ class StoreTest extends \PHPUnit_Framework_TestCase
 
     public function testInstantiate()
     {
-        $store = new Store();
+        $rawData = Accounts::findPosts("Jethro_E7", false, true);
+        $store = new Store($rawData['data'], '\Post', 'post', 'post_id');
 
         $store->new = true;
-        $this->assertTrue($store->new);
-        $this->assertFalse($store->old);
+        $this->assertFalse($store->new);
     }
 
     public function testOffsetExists()

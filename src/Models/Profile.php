@@ -9,8 +9,8 @@ use StarCitizen\Accounts\Accounts;
  *
  * @package StarCitizen\Models
  *
- * @property Threads $threads
- * @property Posts$posts
+ * @property Store $threads
+ * @property Store $posts
  */
 class Profile
 {
@@ -128,12 +128,12 @@ class Profile
     ];
 
     /**
-     * @var Threads
+     * @var Store
      */
     private $threads;
 
     /**
-     * @var Posts
+     * @var Store
      */
     private $posts;
 
@@ -150,13 +150,13 @@ class Profile
     }
 
     /**
-     * @return Threads
+     * @return Store
      */
     protected function threads()
     {
         if ($this->threads === null) {
             $threads = Accounts::findThreads($this->handle);
-            if ($threads instanceof Threads)
+            if ($threads instanceof Store)
                 $this->threads = $threads;
         }
 
@@ -166,13 +166,13 @@ class Profile
     }
 
     /**
-     * @return Posts
+     * @return Store
      */
     protected function posts()
     {
         if ($this->posts === null) {
             $posts = Accounts::findPosts($this->handle);
-            if ($posts instanceof Posts)
+            if ($posts instanceof Store)
                 $this->posts = $posts;
         }
 

@@ -88,7 +88,7 @@ abstract class StarCitizenAbstract
     }
 
     /**
-     * Setup the client, this is kind of singleton and anti-patterny but it will work nicely
+     * Setup the client
      */
     private static function setupClient()
     {
@@ -106,7 +106,13 @@ abstract class StarCitizenAbstract
      */
     public static function fillModel($modelType, $fillData)
     {
-        $object = new \ReflectionClass('StarCitizen\Models' . static::MODELS[$modelType]);
-        return $object->newInstance($fillData);
+        if (is_array(static::MODELS[$modelType])) {
+            list($className, $dataRoot, $idName) = static::MODELS[$modelType];
+            $object = new \ReflectionClass('StarCitizen\Models\Store');
+            return $object->newInstance($fillData, $className, $dataRoot, $idName);
+        } else {
+            $object = new \ReflectionClass('StarCitizen\Models' . static::MODELS[$modelType]);
+            return $object->newInstance($fillData);
+        }
     }
 }

@@ -15,6 +15,30 @@ class Store implements ArrayAccess, Countable, IteratorAggregate
 {
     protected $items = [];
 
+    private $className;
+
+    /**
+     * Store constructor.
+     *
+     * @param array $data
+     * @param string $className
+     * @param string $dataRoot
+     * @param string $idName
+     */
+    public function __construct(array $data, $className, $dataRoot, $idName)
+    {
+        $this->className = 'StarCitizen\Models' . $className;
+        foreach ($data as $item) {
+            if ($dataRoot != '')
+                $objectData = $item[$dataRoot];
+            else
+                $objectData = $item;
+
+            $storageObject = new \ReflectionClass('StarCitizen\Models' . $className);
+            $this->offsetSet($objectData[$idName], $storageObject->newInstance($objectData));
+        }
+    }
+
     /**
      * @return ArrayIterator
      */
@@ -55,7 +79,8 @@ class Store implements ArrayAccess, Countable, IteratorAggregate
      */
     public function offsetSet($offset, $value)
     {
-        $this->items[$offset] = $value;
+        if ($value instanceof $this->className)
+            $this->items[$offset] = $value;
     }
 
     /**

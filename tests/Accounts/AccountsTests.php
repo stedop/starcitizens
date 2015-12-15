@@ -20,7 +20,8 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
     public function testThreads()
     {
         $threads = Accounts::findThreads("Jethro_E7");
-        $this->assertInstanceOf('StarCitizen\Models\Threads', $threads);
+        $this->assertInstanceOf('StarCitizen\Models\Store', $threads);
+        $this->assertTrue(count($threads) > 0);
         foreach ($threads as $thread) {
             $this->assertInstanceOf('StarCitizen\Models\Thread', $thread);
         }
@@ -29,7 +30,8 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
     public function testPosts()
     {
         $posts = Accounts::findPosts("Jethro_E7");
-        $this->assertInstanceOf('StarCitizen\Models\Posts', $posts);
+        $this->assertInstanceOf('StarCitizen\Models\Store', $posts);
+        $this->assertTrue(count($posts) > 0);
         foreach ($posts as $post) {
             $this->assertInstanceOf('StarCitizen\Models\Post', $post);
         }
@@ -44,14 +46,14 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('StarCitizen\Models\Thread', $thread);
         }
 
-        $this->assertInstanceOf('StarCitizen\Models\Threads', $account->threads);
+        $this->assertInstanceOf('StarCitizen\Models\Store', $account->threads);
 
         foreach ($account->posts as $post) {
             $this->assertInstanceOf('StarCitizen\Models\Post', $post);
         }
 
-        $this->assertInstanceOf('StarCitizen\Models\Threads', $account->threads);
-        $this->assertInstanceOf('StarCitizen\Models\Posts', $account->posts);
+        $this->assertInstanceOf('StarCitizen\Models\Store', $account->threads);
+        $this->assertInstanceOf('StarCitizen\Models\Store', $account->posts);
 
         $this->assertNull($account->notReal);
     }
@@ -59,8 +61,8 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
     public function testWith()
     {
         $account = Accounts::findProfile("jethro_e7")->with('posts', 'Threads', 'doesNotExist');
-        $this->assertInstanceOf('StarCitizen\Models\Threads', $account->threads);
-        $this->assertInstanceOf('StarCitizen\Models\Posts', $account->posts);
+        $this->assertInstanceOf('StarCitizen\Models\Store', $account->threads);
+        $this->assertInstanceOf('StarCitizen\Models\Store', $account->posts);
 
         $this->assertEquals('jethro_e7', Accounts::findProfile("jethro_e7")->with('posts', 'threads')->handle);
     }
