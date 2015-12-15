@@ -67,7 +67,7 @@ abstract class StarCitizenAbstract
             'expedite' => '0',
             'format' => 'json',
             'start_page' => '1',
-            'end_page' => '999'
+            'end_page' => '5'
         ];
     }
 
