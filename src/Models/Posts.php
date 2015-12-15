@@ -23,6 +23,10 @@ class Posts extends Store
         }
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
     public function offsetSet($offset, $value)
     {
         if ($value instanceof Post)
