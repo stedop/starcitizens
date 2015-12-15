@@ -1,6 +1,7 @@
 <?php
 
 namespace StarCitizen\Organisations;
+
 use StarCitizen\Base\StarCitizenAbstract;
 use StarCitizen\Models\Organisation;
 
@@ -9,7 +10,7 @@ use StarCitizen\Models\Organisation;
  *
  * @package StarCitizen\Orginisations;
  */
-class Organisations extends StarCitizenAbstract
+final class Organisations extends StarCitizenAbstract
 {
 
     const ORG = 'single_organization';
@@ -21,7 +22,7 @@ class Organisations extends StarCitizenAbstract
      */
     const MODELS = [
         Organisations::ORG => '\Organisation',
-        Organisations::MEMBERS => '\Members'
+        Organisations::MEMBERS => ['\OrgMember', '', '']
     ];
 
     /**
@@ -37,8 +38,20 @@ class Organisations extends StarCitizenAbstract
      *
      * @return bool|Organisation
      */
-    public static function findOrg($id, $cache = false, $raw = false)
+    final public static function findOrg($id, $cache = false, $raw = false)
     {
         return self::find($id, Organisations::ORG, $cache, $raw);
+    }
+
+    /**
+     * @param $id
+     * @param bool $cache
+     * @param bool $raw
+     *
+     * @return bool|mixed
+     */
+    final public static function findMebers($id, $cache = false, $raw = false)
+    {
+        return self::find($id, Organisations::MEMBERS, $cache, $raw);
     }
 }
