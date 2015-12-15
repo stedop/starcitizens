@@ -1,13 +1,17 @@
 <?php
 namespace StarCitizen\Models;
+use StarCitizen\Organisations\Organisations;
 
 /**
  * Class Organization
  *
  * @package StarCitizen\Models;
  */
-class Organisation
+class Organisation extends BaseModel
 {
+    /**
+     * Org vars
+     */
     public $sid;
     public $title;
     public $logo;
@@ -31,10 +35,38 @@ class Organisation
     public $date_added;
     public $last_scrape_date;
 
+    /**
+     * @var array
+     */
+    protected $magicProperties = [
+        'members'
+    ];
+
+    private $members;
+
+    /**
+     * Organisation constructor.
+     *
+     * @param $orgData
+     */
     public function __construct($orgData)
     {
         foreach ($orgData as $key => $value) {
             $this->$key = $value;
         }
+    }
+
+    /**
+     * @return null|Store
+     */
+    final protected function members()
+    {
+        if ($this->members === null) {
+            $members = Organisations::findMembers($this->sid);
+            if ($members instanceof Store)
+                $this->members = $members;
+        }
+
+        return $this->members;
     }
 }

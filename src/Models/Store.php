@@ -28,14 +28,21 @@ class Store implements ArrayAccess, Countable, IteratorAggregate
     public function __construct(array $data, $className, $dataRoot, $idName)
     {
         $this->className = 'StarCitizen\Models' . $className;
-        foreach ($data as $item) {
-            if ($dataRoot != '')
-                $objectData = $item[$dataRoot];
-            else
-                $objectData = $item;
 
+        // start count
+        $idCounter = 0;
+
+        foreach ($data as $item) {
+            // add one to counter
+            $idCounter++;
+
+            // Check the data root and idName are good
+            $objectData = ($dataRoot != '' ? $item[$dataRoot] : $item);
+            $id = ($idName == '' ? $idCounter : $idName);
+
+            // create the appropriate class and add it to items
             $storageObject = new \ReflectionClass('StarCitizen\Models' . $className);
-            $this->offsetSet($objectData[$idName], $storageObject->newInstance($objectData));
+            $this->offsetSet($objectData[$id], $storageObject->newInstance($objectData));
         }
     }
 

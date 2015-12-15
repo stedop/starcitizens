@@ -12,117 +12,37 @@ use StarCitizen\Accounts\Accounts;
  * @property Store $threads
  * @property Store $posts
  */
-class Profile
+class Profile extends BaseModel
 {
     /**
-     * @var string
+     * Profile vars
      */
     public $handle;
-
-    /**
-     * @var
-     */
     public $citizen_number;
-
-    /**
-     * @var
-     */
     public $status;
-
-    /**
-     * @var
-     */
     public $moniker;
-
-    /**
-     * @var
-     */
     public $avatar;
-
-    /**
-     * @var
-     */
     public $enlisted;
-
-    /**
-     * @var
-     */
     public $title;
-
-    /**
-     * @var
-     */
     public $title_image;
-
-    /**
-     * @var
-     */
     public $bio;
-
-    /**
-     * @var
-     */
     public $website_link;
-
-    /**
-     * @var
-     */
     public $website_title;
-
-    /**
-     * @var
-     */
     public $country;
-
-    /**
-     * @var
-     */
     public $region;
-
-    /**
-     * @var
-     */
     public $fluenc;
-
-    /**
-     * @var
-     */
     public $discussion_count;
-
-    /**
-     * @var
-     */
     public $post_count;
-
-    /**
-     * @var
-     */
     public $last_forum_visit;
-
-    /**
-     * @var
-     */
     public $forum_roles;
-
-    /**
-     * @var
-     */
     public $organizations;
-
-    /**
-     * @var
-     */
     public $date_added;
-
-    /**
-     * @var
-     */
     public $last_scrape_date;
 
     /**
      * @var array
      */
-    private $magicProperties = [
+    protected $magicProperties = [
         'threads',
         'posts'
     ];
@@ -152,7 +72,7 @@ class Profile
     /**
      * @return Store
      */
-    protected function threads()
+    final protected function threads()
     {
         if ($this->threads === null) {
             $threads = Accounts::findThreads($this->handle);
@@ -160,15 +80,13 @@ class Profile
                 $this->threads = $threads;
         }
 
-
-
         return $this->threads;
     }
 
     /**
      * @return Store
      */
-    protected function posts()
+    final protected function posts()
     {
         if ($this->posts === null) {
             $posts = Accounts::findPosts($this->handle);
@@ -177,33 +95,5 @@ class Profile
         }
 
         return $this->posts;
-    }
-
-    /**
-     * @param array ...$types
-     *
-     * @return $this
-     */
-    public function with(...$types) {
-        foreach ($types as $type) {
-            if (method_exists($this, strtolower($type)))
-                call_user_func([$this, $type]);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param $name
-     *
-     * @return mixed|null
-     */
-    public function __get($name)
-    {
-        if (in_array($name, $this->magicProperties)) {
-            return call_user_func([$this, $name]);
-        }
-
-        return null;
     }
 }

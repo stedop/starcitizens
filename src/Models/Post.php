@@ -17,9 +17,14 @@ class Post
     public  $thread_title;
     public  $permalink;
 
-    public function __construct($postdData)
+    /**
+     * Post constructor.
+     *
+     * @param array $postData
+     */
+    public function __construct(array $postData)
     {
-        foreach ($postdData as $key => $value) {
+        foreach ($postData as $key => $value) {
             $this->$key = $value;
         }
     }
