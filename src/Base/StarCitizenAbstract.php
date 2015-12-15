@@ -65,7 +65,9 @@ abstract class StarCitizenAbstract
             'action' => $profileType,
             'target_id' => $id,
             'expedite' => '0',
-            'format' => 'json'
+            'format' => 'json',
+            'start_page' => '1',
+            'end_page' => '999'
         ];
     }
 
