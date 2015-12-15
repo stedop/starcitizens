@@ -39,7 +39,7 @@ final class Organisations extends StarCitizenAbstract
      *
      * @return bool|Organisation
      */
-    final public static function findOrg($id, $cache = false, $raw = false)
+    public static function findOrg($id, $cache = false, $raw = false)
     {
         return self::find($id, Organisations::ORG, $cache, $raw);
     }
@@ -51,7 +51,7 @@ final class Organisations extends StarCitizenAbstract
      *
      * @return bool|Store
      */
-    final public static function findMembers($id, $cache = false, $raw = false)
+    public static function findMembers($id, $cache = false, $raw = false)
     {
         return self::find($id, Organisations::MEMBERS, $cache, $raw);
     }

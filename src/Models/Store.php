@@ -28,10 +28,6 @@ class Store implements ArrayAccess, Countable, IteratorAggregate
     public function __construct(array $data, $className, $dataRoot, $idName)
     {
         $this->className = 'StarCitizen\Models' . $className;
-
-        // start count
-        $idCounter = 0;
-
         foreach ($data as $item) {
 
             // Check the data root and idName are good
