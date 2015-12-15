@@ -54,7 +54,7 @@ class Accounts extends StarCitizenAbstract
      * @param bool $cache
      * @param bool $raw
      *
-     * @return bool|Store||string
+     * @return bool|Store|string
      */
     public static function findThreads($id, $cache = false, $raw = false)
     {
