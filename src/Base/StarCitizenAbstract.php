@@ -34,9 +34,32 @@ abstract class StarCitizenAbstract
     protected static function find($id, $profileType, $cache = false, $raw = false)
     {
         self::setupClient();
+
+        $response = json_decode(
+            self::$client
+                ->getResult(
+                    self::getParams($id, $profileType, $cache)
+                )
+                ->getBody()
+                ->getContents(),
+            true
+        );
+
+        return self::checkResponse($response, $profileType, $raw);
+    }
+
+    /**
+     * @param $id
+     * @param $profileType
+     * @param $cache
+     *
+     * @return array
+     */
+    private static function getParams($id, $profileType, $cache)
+    {
         $cache = ($cache === true)? "cache" : "live";
 
-        $params = [
+        return [
             'api_source' => $cache,
             'system' => static::$system,
             'action' => $profileType,
@@ -44,8 +67,17 @@ abstract class StarCitizenAbstract
             'expedite' => '0',
             'format' => 'json'
         ];
+    }
 
-        $response = json_decode(self::$client->getResult($params)->getBody()->getContents(), true);
+    /**
+     * @param $response
+     * @param $profileType
+     * @param $raw
+     *
+     * @return bool|mixed
+     */
+    private static function checkResponse($response, $profileType, $raw)
+    {
         if ($response['request_stats']['query_status'] == "success")
             if ($raw === true)
                 return $response;
