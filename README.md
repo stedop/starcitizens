@@ -16,7 +16,35 @@ into the command line at your project root and you're good to
 
 ## Usage
 
+To get information
 
+    use StarCitizen\Accounts\Accounts;
+    
+    $profile = Accounts::findProfile(<userName>);
+    $threads = Accounts::findThreads(<userName>);
+    $posts = Accounts::findPosts(<userName>);
+    
+### Loading any other objects afterwards
+
+If you want to get a profiles' latest posts or threads
+ 
+    $posts = $profile->posts;
+    $threads = $profile->threads;
+
+This returns the posts or threads or you don't have to assign the posts or thread to a var, simply use
+
+    foreach ($profile->posts as $post) {
+        // ....your code
+    }
+    
+### Eager loading
+
+If you wanted to load the objects when you find the profile
+
+    $profile = Accounts::findProfile(<userName>)->with('posts', 'threads');
+
+
+Please review the code for further information  
 
 ## Contributing
 
