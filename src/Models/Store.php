@@ -33,16 +33,14 @@ class Store implements ArrayAccess, Countable, IteratorAggregate
         $idCounter = 0;
 
         foreach ($data as $item) {
-            // add one to counter
-            $idCounter++;
 
             // Check the data root and idName are good
             $objectData = ($dataRoot != '' ? $item[$dataRoot] : $item);
-            $id = ($idName == '' ? $idCounter : $idName);
+            $id = ($idName == '' ? null : $objectData[$idName]);
 
             // create the appropriate class and add it to items
             $storageObject = new \ReflectionClass('StarCitizen\Models' . $className);
-            $this->offsetSet($objectData[$id], $storageObject->newInstance($objectData));
+            $this->offsetSet($id, $storageObject->newInstance($objectData));
         }
     }
 
@@ -87,7 +85,10 @@ class Store implements ArrayAccess, Countable, IteratorAggregate
     public function offsetSet($offset, $value)
     {
         if ($value instanceof $this->className)
-            $this->items[$offset] = $value;
+            if ($offset == null)
+                $this->items[] = $value;
+            else
+                $this->items[$offset] = $value;
     }
 
     /**

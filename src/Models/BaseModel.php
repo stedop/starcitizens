@@ -6,26 +6,12 @@ namespace StarCitizen\Models;
  *
  * @package StarCitizen\Models;
  */
-abstract class BaseModel
+class BaseModel
 {
     /**
      * @var array
      */
     protected $magicProperties = [];
-
-    /**
-     * @param $name
-     *
-     * @return mixed|null
-     */
-    public function __get($name)
-    {
-        if (in_array($name, $this->magicProperties)) {
-            return call_user_func([$this, $name]);
-        }
-
-        return null;
-    }
 
     /**
      * @param array ...$types
@@ -39,5 +25,19 @@ abstract class BaseModel
         }
 
         return $this;
+    }
+
+    /**
+     * @param $name
+     *
+     * @return mixed|null
+     */
+    public function __get($name)
+    {
+        if (in_array($name, $this->magicProperties)) {
+            return call_user_func([$this, $name]);
+        }
+
+        return null;
     }
 }

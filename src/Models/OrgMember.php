@@ -1,15 +1,17 @@
 <?php
+
 namespace StarCitizen\Models;
+
 use StarCitizen\Accounts\Accounts;
 
 /**
  * Class OrgMember
  *
- * @package StarCitizen\Models;
+ * @package StarCitizen\Models
  *
  * @property Profile $profile
  */
-class OrgMember
+class OrgMember extends BaseModel
 {
     /**
      * Member vars
@@ -43,7 +45,7 @@ class OrgMember
     public function __construct(array $memberData)
     {
         foreach ($memberData as $key => $value) {
-            $this->$$key = $value;
+            $this->$key = $value;
         }
     }
 
@@ -55,7 +57,7 @@ class OrgMember
         if ($this->profile === null) {
             $profile = Accounts::findProfile($this->handle);
             if ($profile instanceof Profile)
-                $this->$profile = $profile;
+                $this->profile = $profile;
         }
 
         return $this->profile;

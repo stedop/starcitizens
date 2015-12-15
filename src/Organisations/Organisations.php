@@ -4,6 +4,7 @@ namespace StarCitizen\Organisations;
 
 use StarCitizen\Base\StarCitizenAbstract;
 use StarCitizen\Models\Organisation;
+use StarCitizen\Models\Store;
 
 /**
  * Class Organisations
@@ -14,7 +15,7 @@ final class Organisations extends StarCitizenAbstract
 {
 
     const ORG = 'single_organization';
-    const MEMBERS = 'members';
+    const MEMBERS = 'organization_members';
     const BASEPROFILE = Organisations::ORG;
 
     /**
@@ -22,7 +23,7 @@ final class Organisations extends StarCitizenAbstract
      */
     const MODELS = [
         Organisations::ORG => '\Organisation',
-        Organisations::MEMBERS => ['\OrgMember', '', '']
+        Organisations::MEMBERS => ['\OrgMember', '', 'handle']
     ];
 
     /**
@@ -48,9 +49,9 @@ final class Organisations extends StarCitizenAbstract
      * @param bool $cache
      * @param bool $raw
      *
-     * @return bool|mixed
+     * @return bool|Store
      */
-    final public static function findMebers($id, $cache = false, $raw = false)
+    final public static function findMembers($id, $cache = false, $raw = false)
     {
         return self::find($id, Organisations::MEMBERS, $cache, $raw);
     }
