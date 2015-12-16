@@ -3,6 +3,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/stedop/starcitizens/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/stedop/starcitizens/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/stedop/starcitizens/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/stedop/starcitizens/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/stedop/starcitizens/badges/build.png?b=master)](https://scrutinizer-ci.com/g/stedop/starcitizens/build-status/master)
+[![Documentation Status](https://readthedocs.org/projects/starcitizens/badge/?version=latest)](http://starcitizens.readthedocs.org/en/latest/?badge=latest)
 
 A StarCitizen API wrapper.  Utilises the API from http://sc-api.com
 
