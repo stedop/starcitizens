@@ -54,7 +54,7 @@ If you wanted to load the objects when you find the profile
 
 All of the core find classes are final but every model is extensible.  This will allow you to create your own logic for each model.
 
-For example, using the Profile model
+[For example, using the Profile model](https://github.com/stedop/starcitizens/blob/master/src/Examples/ExtensionExample.php)
  
 Please review the code for further information  
 
