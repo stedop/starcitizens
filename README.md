@@ -25,6 +25,12 @@ To get information
     $threads = Accounts::findThreads(<userName>);
     $posts = Accounts::findPosts(<userName>);
     
+    use StarCitizen\Organisations\Organisations;
+    
+    $org = Organisations::findOrg(<orgName>);
+    $members = Organisations::findMembers(<orgName>);
+    
+    
 ### Loading other objects after getting some info
 
 If you want to get a profiles' latest posts or threads
@@ -38,6 +44,8 @@ If you want to get a profiles' latest posts or threads
     $posts = $profile->posts;
     $threads = $profile->threads;
 
+    $members = $org->members;
+    
 This returns the posts or threads or you don't have to assign the posts or thread to a var, simply use
 
     foreach ($profile->posts as $post) {
@@ -49,7 +57,7 @@ This returns the posts or threads or you don't have to assign the posts or threa
 If you wanted to load the objects when you find the profile
 
     $profile = Accounts::findProfile(<userName>)->with('posts', 'threads');
-
+    $org = Organisations::findOrg(<orgName>)->with('members');
 
 ### Extending
 
