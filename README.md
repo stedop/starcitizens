@@ -24,7 +24,7 @@ To get information
     $threads = Accounts::findThreads(<userName>);
     $posts = Accounts::findPosts(<userName>);
     
-### Loading any other objects after loading
+### Loading other objects after getting some info
 
 If you want to get a profiles' latest posts or threads
  
