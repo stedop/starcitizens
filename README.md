@@ -50,6 +50,12 @@ If you wanted to load the objects when you find the profile
     $profile = Accounts::findProfile(<userName>)->with('posts', 'threads');
 
 
+### Extending
+
+All of the core find classes are final but every model is extensible.  This will allow you to create your own logic for each model.
+
+For example, using the Profile model
+ 
 Please review the code for further information  
 
 ## Contributing
