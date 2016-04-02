@@ -69,7 +69,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
 
         $this->posts->offsetSet(null, $newThread);
 
-        $this->assertTrue($this->posts->offsetExists(6047553));
+        $this->assertFalse($this->posts->offsetExists(6047553));
 
         // Test count
         $this->assertTrue($countBeforeAdd+2 == count($this->posts));
