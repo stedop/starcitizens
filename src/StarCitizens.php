@@ -72,6 +72,19 @@ final class StarCitizens
     }
 
     /**
+     * @param $name
+     * @param $arguments
+     * @return bool|mixed
+     * @throws \Exception
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        $starCitizens = new StarCitizens();
+        return $starCitizens->__call($name, $arguments);
+    }
+
+
+    /**
      * Find an entity
      *
      * @param $id

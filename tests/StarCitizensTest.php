@@ -42,6 +42,13 @@ class StarCitizensTest extends \PHPUnit_Framework_TestCase
         foreach ($response as $thread) {
             $this->assertInstanceOf('StarCitizen\Models\Thread',$thread);
         }
+    }
 
+    public function testStatic()
+    {
+        $response = StarCitizens::accounts('MrChance');
+        $this->assertNotNull($response);
+        $this->assertNotFalse($response);
+        $this->assertInstanceOf('StarCitizen\Models\Profile',$response);
     }
 }
