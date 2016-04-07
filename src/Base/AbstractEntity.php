@@ -3,13 +3,14 @@
 namespace StarCitizen\Base;
 
 use StarCitizen\Client\StarCitizensClient;
+use StarCitizen\Models\Model;
 
 /**
  * Class ClientAwareTrait
  *
  * @package StarCitizen\Contracts
  */
-abstract class StarCitizenAbstract
+abstract class AbstractEntity
 {
     /**
      * @var bool|StarCitizensClient
@@ -57,7 +58,7 @@ abstract class StarCitizenAbstract
      */
     private static function getParams($id, $profileType, $cache)
     {
-        $cache = ($cache === true)? "cache" : "live";
+        $cache = ($cache === true) ? "cache" : "live";
 
         return [
             'api_source' => $cache,
@@ -80,11 +81,13 @@ abstract class StarCitizenAbstract
      */
     private static function checkResponse($response, $profileType, $raw)
     {
-        if ($response['request_stats']['query_status'] == "success")
-            if ($raw === true)
+        if ($response['request_stats']['query_status'] == "success") {
+            if ($raw === true) {
                 return $response;
-            else
+            } else {
                 return self::fillModel($profileType, $response['data']);
+            }
+        }
 
         return false;
     }
@@ -94,8 +97,9 @@ abstract class StarCitizenAbstract
      */
     private static function setupClient()
     {
-        if (static::$client === false)
+        if (static::$client === false) {
             static::$client = new StarCitizensClient();
+        }
     }
 
     /**
@@ -104,7 +108,7 @@ abstract class StarCitizenAbstract
      * @param $modelType
      * @param $fillData
      *
-     * @return mixed
+     * @return Model
      */
     public static function fillModel($modelType, $fillData)
     {
@@ -117,4 +121,5 @@ abstract class StarCitizenAbstract
             return $object->newInstance($fillData);
         }
     }
+
 }

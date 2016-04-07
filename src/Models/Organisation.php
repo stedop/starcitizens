@@ -7,7 +7,7 @@ use StarCitizen\Organisations\Organisations;
  *
  * @package StarCitizen\Models;
  */
-class Organisation extends BaseModel
+class Organisation extends Model
 {
     /**
      * Org vars
@@ -59,7 +59,7 @@ class Organisation extends BaseModel
     /**
      * @return null|Store
      */
-    final protected function members()
+    protected function members()
     {
         if ($this->members === null) {
             $members = Organisations::findMembers($this->sid);

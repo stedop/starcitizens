@@ -11,7 +11,7 @@ use StarCitizen\Accounts\Accounts;
  *
  * @property Profile $profile
  */
-class OrgMember extends BaseModel
+class OrgMember extends Model
 {
     /**
      * Member vars

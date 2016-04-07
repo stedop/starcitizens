@@ -2,7 +2,7 @@
 
 namespace StarCitizen\Accounts;
 
-use StarCitizen\Base\StarCitizenAbstract;
+use StarCitizen\Base\AbstractEntity;
 use StarCitizen\Models\Profile;
 use StarCitizen\Models\Store;
 
@@ -11,7 +11,7 @@ use StarCitizen\Models\Store;
  *
  * @package StarCitizen\Accounts;
  */
-class Accounts extends StarCitizenAbstract
+class Accounts extends AbstractEntity
 {
 
     /**

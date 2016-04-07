@@ -12,7 +12,7 @@ use StarCitizen\Accounts\Accounts;
  * @property Store $threads
  * @property Store $posts
  */
-class Profile extends BaseModel
+class Profile extends Model
 {
     /**
      * Profile vars

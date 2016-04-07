@@ -6,7 +6,7 @@ namespace StarCitizen\Models;
  *
  * @package StarCitizen\Models;
  */
-class BaseModel
+abstract class Model
 {
     /**
      * @var array
@@ -38,6 +38,6 @@ class BaseModel
             return call_user_func([$this, $name]);
         }
 
-        return null;
+        throw new \Exception('Property ' . $name . ' does not exist in this class');
     }
 }

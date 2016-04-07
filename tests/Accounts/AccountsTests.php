@@ -35,27 +35,28 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
         foreach ($posts as $post) {
             $this->assertInstanceOf('StarCitizen\Models\Post', $post);
         }
-    }
+    }   
 
     public function testMagic()
     {
         $account = Accounts::findProfile("jethro_e7");
         $this->assertInstanceOf('StarCitizen\Models\Profile', $account);
 
+        $this->assertInstanceOf('StarCitizen\Models\Store', $account->threads);
+
         foreach ($account->threads as $thread) {
             $this->assertInstanceOf('StarCitizen\Models\Thread', $thread);
         }
 
-        $this->assertInstanceOf('StarCitizen\Models\Store', $account->threads);
+        $this->assertInstanceOf('StarCitizen\Models\Store', $account->posts);
 
         foreach ($account->posts as $post) {
             $this->assertInstanceOf('StarCitizen\Models\Post', $post);
         }
 
-        $this->assertInstanceOf('StarCitizen\Models\Store', $account->threads);
-        $this->assertInstanceOf('StarCitizen\Models\Store', $account->posts);
-
-        $this->assertNull($account->notReal);
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Property notReal does not exist in this class');
+        $account->notReal;
     }
 
     public function testWith()

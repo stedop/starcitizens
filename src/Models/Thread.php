@@ -6,7 +6,7 @@ namespace StarCitizen\Models;
  *
  * @package StarCitizen\Models
  */
-class Thread extends BaseModel
+class Thread extends Model
 {
     public $thread_title;
     public $thread_id;

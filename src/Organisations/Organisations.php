@@ -2,7 +2,7 @@
 
 namespace StarCitizen\Organisations;
 
-use StarCitizen\Base\StarCitizenAbstract;
+use StarCitizen\Base\AbstractEntity;
 use StarCitizen\Models\Organisation;
 use StarCitizen\Models\Store;
 
@@ -11,7 +11,7 @@ use StarCitizen\Models\Store;
  *
  * @package StarCitizen\Orginisations;
  */
-final class Organisations extends StarCitizenAbstract
+final class Organisations extends AbstractEntity
 {
 
     const ORG = 'single_organization';

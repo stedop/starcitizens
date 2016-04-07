@@ -122,4 +122,12 @@ class Store implements ArrayAccess, Countable, IteratorAggregate
     {
         $this->offsetSet($name, $value);
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return json_encode($this->items);
+    }
 }

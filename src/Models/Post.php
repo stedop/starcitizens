@@ -6,7 +6,7 @@ namespace StarCitizen\Models;
  *
  * @package StarCitizen\Models;
  */
-class Post
+class Post extends Model
 {
     public  $post_time;
     public  $last_edit_time;
