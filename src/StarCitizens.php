@@ -9,8 +9,8 @@ use StarCitizen\Client\StarCitizensClient;
  * Class StarCitizens
  * @package StarCitizen
  *
- * @method accounts($id, $profileType = false, $cache = false, $raw = false)
- * @method organisations($id, $profileType = false, $cache = false, $raw = false)
+ * @method accounts($id, $profileType = false, $cache = false, $raw = false) Get accounts system results
+ * @method organisations($id, $profileType = false, $cache = false, $raw = false) Get org system results
  */
 final class StarCitizens
 {
