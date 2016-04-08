@@ -35,7 +35,7 @@ final class StarCitizens
      */
     public function __construct()
     {
-        static::setupClient();
+        self::setupClient();
     }
 
     /**
