@@ -109,7 +109,6 @@ final class StarCitizens
      */
     private function find($id, $system, $profileType, $cache = false, $raw = false)
     {
-        var_dump($this->getParams($id, $system, $profileType, $cache));
         $response = json_decode(
             self::$client
                 ->getResult(
