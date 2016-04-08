@@ -44,31 +44,44 @@ final class StarCitizens
      * @return bool|mixed
      * @throws \Exception
      */
-    function __call($name, $arguments)
+    public function __call($name, $arguments)
     {
         if (array_key_exists($name, $this->systems)) {
-            $argumentCount = count($arguments);
-            if ($argumentCount == 0)
-                throw new \InvalidArgumentException("Requires an argument");
-
-            if ($argumentCount > 0 && $argumentCount< 2)
-                return $this->find($arguments[0], $name, $this->systems[$name]['base_action']);
-
-            if ($argumentCount == 2) {
-                list($id, $profileType) = $arguments;
-                if ($profileType == false)
-                    $profileType = $this->systems[$name]['base_action'];
-                return $this->find($id, $name, $profileType);
-            }
-            if ($argumentCount == 4 ) {
-                list($id, $profileType, $cache, $raw) = $arguments;
-                return $this->find($id, $name, $profileType, $cache, $raw);
-            } else {
-                throw new \InvalidArgumentException("Invalid arguments");
-            }
+            $this->doCall($name, $arguments);
         }
 
         throw new \Exception("Method not found");
+    }
+
+    /**
+     * @param $name
+     * @param array $arguments
+     * @return bool|mixed
+     */
+    private function doCall($name, array $arguments)
+    {
+        $argumentCount = count($arguments);
+
+        if ($argumentCount == 0)
+            throw new \InvalidArgumentException("Requires an argument");
+
+        if ($argumentCount > 0 && $argumentCount< 2)
+            return $this->find($arguments[0], $name, $this->systems[$name]['base_action']);
+
+        if ($argumentCount == 2) {
+            list($id, $profileType) = $arguments;
+            if ($profileType == false)
+                $profileType = $this->systems[$name]['base_action'];
+            return $this->find($id, $name, $profileType);
+        }
+
+        if ($argumentCount == 4 ) {
+            list($id, $profileType, $cache, $raw) = $arguments;
+            return $this->find($id, $name, $profileType, $cache, $raw);
+        }
+
+        throw new \InvalidArgumentException("Invalid arguments");
+
     }
 
     /**
