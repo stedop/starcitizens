@@ -62,26 +62,43 @@ final class StarCitizens
     {
         $argumentCount = count($arguments);
 
-        if ($argumentCount == 0)
-            throw new \InvalidArgumentException("Requires an argument");
-
         if ($argumentCount > 0 && $argumentCount< 2)
-            return $this->find($arguments[0], $name, $this->systems[$name]['base_action']);
+            return $this->callBase($arguments[0], $name);
 
         if ($argumentCount == 2) {
-            list($id, $profileType) = $arguments;
-            if ($profileType == false)
-                $profileType = $this->systems[$name]['base_action'];
-            return $this->find($id, $name, $profileType);
+            list($id, $action) = $arguments;
+            return $this->callAction($id, $name, $action);
         }
 
-        if ($argumentCount == 4 ) {
-            list($id, $profileType, $cache, $raw) = $arguments;
-            return $this->find($id, $name, $profileType, $cache, $raw);
+        if ($argumentCount == 4) {
+            list($id, $action, $cache, $raw) = $arguments;
+            return $this->find($id, $name, $action, $cache, $raw);
         }
 
         throw new \InvalidArgumentException("Invalid arguments");
+    }
 
+    /**
+     * @param $id
+     * @param $system
+     * @return bool|mixed
+     */
+    private function callBase($id, $system)
+    {
+        return $this->find($id, $system, $this->systems[$system]['base_action']);
+    }
+
+    /**
+     * @param $id
+     * @param $system
+     * @param bool $action
+     * @return bool|mixed
+     */
+    private function callAction($id, $system, $action = false)
+    {
+        if ($action === false)
+            $action = $this->systems[$system]['base_action'];
+        return $this->find($id, $system, $action);
     }
 
     /**
