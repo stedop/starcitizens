@@ -47,10 +47,10 @@ final class StarCitizens
     public function __call($name, $arguments)
     {
         if (array_key_exists($name, $this->systems)) {
-            $this->doCall($name, $arguments);
+            return $this->doCall($name, $arguments);
         }
 
-        throw new \Exception("Method not found");
+        throw new \Exception("Method {$name} not found");
     }
 
     /**
@@ -58,7 +58,7 @@ final class StarCitizens
      * @param array $arguments
      * @return bool|mixed
      */
-    private function doCall($name, array $arguments)
+    private function doCall($name, array $arguments = [])
     {
         $argumentCount = count($arguments);
 
