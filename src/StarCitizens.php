@@ -170,8 +170,8 @@ final class StarCitizens
      */
     private static function setupClient()
     {
-        if (static::$client === false) {
-            static::$client = new StarCitizensClient();
+        if (self::$client === false) {
+            self::$client = new StarCitizensClient();
         }
     }
 
