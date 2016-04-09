@@ -40,18 +40,4 @@ abstract class Model
 
         throw new \Exception('Property ' . $name . ' does not exist in this class');
     }
-
-
-    /**
-     * @param $data
-     * @return $this
-     */
-    public function setData($data)
-    {
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
-        }
-
-        return $this;
-    }
 }
