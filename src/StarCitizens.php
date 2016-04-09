@@ -75,7 +75,7 @@ final class StarCitizens
         $fixedArguments = $this->standardFindArguments($arguments);
         extract($fixedArguments, EXTR_OVERWRITE);
         $action = ($action == "") ? $this->systems[$system]['base_action'] : $action;
-        return $this->find($id, $system, $action, $cache, $raw);
+        return $this->find($id, $system, $action, $raw, $cache);
     }
 
     /**
@@ -88,8 +88,8 @@ final class StarCitizens
         $defaults = [
             'id' => '',
             'action' => '',
-            'cache' => false,
             'raw' => false,
+            'cache' => false,
         ];
 
         $varNames = array_keys($defaults);
@@ -122,11 +122,11 @@ final class StarCitizens
      * @param $id
      * @param $system
      * @param $profileType
-     * @param bool $cache
      * @param bool $raw
+     * @param bool $cache
      * @return bool|mixed
      */
-    private function find($id, $system, $profileType, $cache = false, $raw = false)
+    private function find($id, $system, $profileType, $raw = false, $cache = false)
     {
         $response = json_decode(
             self::$client
