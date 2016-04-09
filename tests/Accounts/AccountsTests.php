@@ -3,6 +3,7 @@
 namespace StarCitizen\Tests\Accounts;
 
 use StarCitizen\Accounts\Accounts;
+use StarCitizen\StarCitizens;
 
 /**
  * Class AccountsTest
@@ -11,10 +12,21 @@ use StarCitizen\Accounts\Accounts;
  */
 class AccountsTests extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var StarCitizens
+     */
+    public $starcitizens;
+
+    public function setUp()
+    {
+        $this->starcitizens = new StarCitizens();
+    }
+
     public function testGetAccount()
     {
         $this->assertFalse(Accounts::findProfile("TheMrChance"));
         $this->assertInstanceOf('StarCitizen\Models\Profile', Accounts::findProfile("MrChance"));
+        $this->assertInstanceOf('StarCitizen\Models\Profile', $this->starcitizens->accounts('MrChance'));
     }
 
     public function testThreads()
@@ -39,7 +51,7 @@ class AccountsTests extends \PHPUnit_Framework_TestCase
 
     public function testMagic()
     {
-        $account = Accounts::findProfile("jethro_e7");
+        $account = Accounts::findProfile("Jethro_E7");
         $this->assertInstanceOf('StarCitizen\Models\Profile', $account);
 
         $this->assertInstanceOf('StarCitizen\Models\Store', $account->threads);

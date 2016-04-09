@@ -10,7 +10,7 @@ use StarCitizen\Client\StarCitizensClient;
  * @package StarCitizen
  *
  * @method accounts($id, $profileType = false, $cache = false, $raw = false) Get accounts system results
- * @method organisations($id, $profileType = false, $cache = false, $raw = false) Get org system results
+ * @method organizations($id, $profileType = false, $cache = false, $raw = false) Get org system results
  */
 final class StarCitizens
 {
@@ -27,7 +27,14 @@ final class StarCitizens
                 "threads" => ['\Thread', '', 'thread_id'],
                 "posts" => ['\Post', 'post', 'post_id'],
             ]
-        ]
+        ],
+        "organizations" => [
+            "base_action" => "single_organization",
+            "actions" => [
+                "single_organization" => '\Organisation',
+                "organization_members" => ['\OrgMember', '', 'handle']
+            ]
+        ],
     ];
 
     /**
@@ -54,51 +61,31 @@ final class StarCitizens
     }
 
     /**
-     * @param $name
+     * @param $system
      * @param array $arguments
      * @return bool|mixed
      */
-    private function doCall($name, array $arguments = [])
+    private function doCall($system, array $arguments = [])
     {
         $argumentCount = count($arguments);
 
-        if ($argumentCount > 0 && $argumentCount< 2)
-            return $this->callBase($arguments[0], $name);
+        if ($argumentCount > 0 && $argumentCount< 2) {
+            list($id) = $arguments;
+            $action = $this->systems[$system]['base_action'];
+            return $this->find($id, $system, $action);
+        }
 
         if ($argumentCount == 2) {
             list($id, $action) = $arguments;
-            return $this->callAction($id, $name, $action);
+            return $this->find($id, $system, $action);
         }
 
         if ($argumentCount == 4) {
             list($id, $action, $cache, $raw) = $arguments;
-            return $this->find($id, $name, $action, $cache, $raw);
+            return $this->find($id, $system, $action, $cache, $raw);
         }
 
         throw new \InvalidArgumentException("Invalid arguments");
-    }
-
-    /**
-     * @param $id
-     * @param $system
-     * @return bool|mixed
-     */
-    private function callBase($id, $system)
-    {
-        return $this->find($id, $system, $this->systems[$system]['base_action']);
-    }
-
-    /**
-     * @param $id
-     * @param $system
-     * @param bool $action
-     * @return bool|mixed
-     */
-    private function callAction($id, $system, $action = false)
-    {
-        if ($action === false)
-            $action = $this->systems[$system]['base_action'];
-        return $this->find($id, $system, $action);
     }
 
     /**

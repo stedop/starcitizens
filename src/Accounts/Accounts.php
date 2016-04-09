@@ -2,39 +2,23 @@
 
 namespace StarCitizen\Accounts;
 
-use StarCitizen\Base\AbstractEntity;
 use StarCitizen\Models\Profile;
 use StarCitizen\Models\Store;
+use StarCitizen\StarCitizens;
 
 /**
  * Class Accounts
  *
  * @package StarCitizen\Accounts;
  */
-class Accounts extends AbstractEntity
+class Accounts
 {
-
-    /**
-     * @var string
-     */
-    protected static $system = "accounts";
-
     /**
      * Constants Profile Types
      */
     const FULL = "full_profile";
     const THREADS = "threads";
     const POSTS = "posts";
-
-    /**
-     * Model Map
-     */
-    const MODELS = [
-        Accounts::FULL => '\Profile',
-        Accounts::THREADS => ['\Thread', '', 'thread_id'],
-        Accounts::POSTS => ['\Post', 'post', 'post_id']
-    ];
-
     const BASEPROFILE = Accounts::FULL;
 
     /**
@@ -46,7 +30,8 @@ class Accounts extends AbstractEntity
      */
     public static function findProfile($id, $cache = false, $raw = false)
     {
-        return self::find($id, Accounts::FULL, $cache, $raw);
+        $starCitizens = new StarCitizens();
+        return $starCitizens->accounts($id, self::BASEPROFILE, $cache, $raw);
     }
 
     /**
@@ -58,7 +43,8 @@ class Accounts extends AbstractEntity
      */
     public static function findThreads($id, $cache = false, $raw = false)
     {
-        return self::find($id, Accounts::THREADS, $cache, $raw);
+        $starCitizens = new StarCitizens();
+        return $starCitizens->accounts($id, Accounts::THREADS, $cache, $raw);
     }
 
     /**
@@ -70,6 +56,7 @@ class Accounts extends AbstractEntity
      */
     public static function findPosts($id, $cache = false, $raw = false)
     {
-        return self::find($id, Accounts::POSTS, $cache, $raw);
+        $starCitizens = new StarCitizens();
+        return $starCitizens->accounts($id, Accounts::POSTS, $cache, $raw);
     }
 }

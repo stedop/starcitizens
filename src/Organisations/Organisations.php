@@ -2,7 +2,7 @@
 
 namespace StarCitizen\Organisations;
 
-use StarCitizen\Base\AbstractEntity;
+use StarCitizen\StarCitizens;
 use StarCitizen\Models\Organisation;
 use StarCitizen\Models\Store;
 
@@ -11,26 +11,11 @@ use StarCitizen\Models\Store;
  *
  * @package StarCitizen\Orginisations;
  */
-final class Organisations extends AbstractEntity
+final class Organisations
 {
-
     const ORG = 'single_organization';
     const MEMBERS = 'organization_members';
     const BASEPROFILE = Organisations::ORG;
-
-    /**
-     * Model map
-     */
-    const MODELS = [
-        Organisations::ORG => '\Organisation',
-        Organisations::MEMBERS => ['\OrgMember', '', 'handle']
-    ];
-
-    /**
-     * @var string
-     */
-    protected static $system = "organizations";
-
 
     /**
      * @param $id
@@ -41,7 +26,8 @@ final class Organisations extends AbstractEntity
      */
     public static function findOrg($id, $cache = false, $raw = false)
     {
-        return self::find($id, Organisations::ORG, $cache, $raw);
+        $starCitizens = new StarCitizens();
+        return $starCitizens->organizations($id, Organisations::ORG, $cache, $raw);
     }
 
     /**
@@ -53,6 +39,7 @@ final class Organisations extends AbstractEntity
      */
     public static function findMembers($id, $cache = false, $raw = false)
     {
-        return self::find($id, Organisations::MEMBERS, $cache, $raw);
+        $starCitizens = new StarCitizens();
+        return $starCitizens->organizations($id, Organisations::MEMBERS, $cache, $raw);
     }
 }

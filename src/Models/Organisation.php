@@ -6,6 +6,7 @@ use StarCitizen\Organisations\Organisations;
  * Class Organization
  *
  * @package StarCitizen\Models;
+ *          
  */
 class Organisation extends Model
 {
