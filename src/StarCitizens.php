@@ -71,9 +71,10 @@ final class StarCitizens
         $cache = false;
         $raw = false;
         $action = "";
-        extract($this->standardFindArguments($arguments), EXTR_OVERWRITE);
-        $action = ($action == "") ? $this->systems[$system]['base_action'] : $action;
 
+        $fixedArguments = $this->standardFindArguments($arguments);
+        extract($fixedArguments, EXTR_OVERWRITE);
+        $action = ($action == "") ? $this->systems[$system]['base_action'] : $action;
         return $this->find($id, $system, $action, $cache, $raw);
     }
 
@@ -83,12 +84,6 @@ final class StarCitizens
      */
     private function standardFindArguments(array $arguments)
     {
-        $varNames = [
-            'id',
-            'action',
-            'cache',
-            'raw',
-        ];
 
         $defaults = [
             'id' => '',
@@ -97,12 +92,14 @@ final class StarCitizens
             'raw' => false,
         ];
 
+        $varNames = array_keys($defaults);
+
         for ($argumentCount = 0; $argumentCount < 4; $argumentCount++) {
             if (array_key_exists($argumentCount, $arguments)) {
                 $defaults[$varNames[$argumentCount]] = $arguments[$argumentCount];
             }
         }
-
+        
         return $defaults;
     }
 
