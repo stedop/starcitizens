@@ -67,25 +67,43 @@ final class StarCitizens
      */
     private function doCall($system, array $arguments = [])
     {
-        $argumentCount = count($arguments);
+        $id = '';
+        $cache = false;
+        $raw = false;
+        $action = "";
+        extract($this->standardFindArguments($arguments), EXTR_OVERWRITE);
+        $action = ($action == "") ? $this->systems[$system]['base_action'] : $action;
 
-        if ($argumentCount > 0 && $argumentCount< 2) {
-            list($id) = $arguments;
-            $action = $this->systems[$system]['base_action'];
-            return $this->find($id, $system, $action);
+        return $this->find($id, $system, $action, $cache, $raw);
+    }
+
+    /**
+     * @param array $arguments
+     * @return array
+     */
+    private function standardFindArguments(array $arguments)
+    {
+        $varNames = [
+            'id',
+            'action',
+            'cache',
+            'raw',
+        ];
+
+        $defaults = [
+            'id' => '',
+            'action' => '',
+            'cache' => false,
+            'raw' => false,
+        ];
+
+        for ($argumentCount = 0; $argumentCount < 4; $argumentCount++) {
+            if (array_key_exists($argumentCount, $arguments)) {
+                $defaults[$varNames[$argumentCount]] = $arguments[$argumentCount];
+            }
         }
 
-        if ($argumentCount == 2) {
-            list($id, $action) = $arguments;
-            return $this->find($id, $system, $action);
-        }
-
-        if ($argumentCount == 4) {
-            list($id, $action, $cache, $raw) = $arguments;
-            return $this->find($id, $system, $action, $cache, $raw);
-        }
-
-        throw new \InvalidArgumentException("Invalid arguments");
+        return $defaults;
     }
 
     /**

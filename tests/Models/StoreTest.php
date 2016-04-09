@@ -88,4 +88,9 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         $this->posts->offsetUnset('999');
         $this->assertFalse($this->posts->offsetExists('999'));
     }
+
+    public function testToString()
+    {
+        $this->assertJson((string) $this->posts);
+    }
 }
