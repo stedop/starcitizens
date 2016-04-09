@@ -31,7 +31,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
 
     public function testInstantiate()
     {
-        $rawData = Accounts::findPosts("Jethro_E7", false, true);
+        $rawData = Accounts::findPosts("Jethro_E7", true, false);
         $store = new Store($rawData['data'], '\Post', 'post', 'post_id');
 
         $store->new = true;
