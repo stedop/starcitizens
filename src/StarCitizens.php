@@ -15,10 +15,13 @@ use StarCitizen\Client\StarCitizensClient;
 final class StarCitizens
 {
     /**
-     * @var bool|StarCitizensClient
+     * @var bool|StarCitizensClient The client object
      */
     private static $client = false;
 
+    /**
+     * @var array  The config for the StarCitizens todo move this to a separate file
+     */
     private $systems = [
         "accounts" => [
             "base_action" => "full_profile",
@@ -46,78 +49,7 @@ final class StarCitizens
     }
 
     /**
-     * @param $name
-     * @param $arguments
-     * @return bool|mixed
-     * @throws \Exception
-     */
-    public function __call($name, $arguments)
-    {
-        if (array_key_exists($name, $this->systems)) {
-            return $this->doCall($name, $arguments);
-        }
-
-        throw new \Exception("Method {$name} not found");
-    }
-
-    /**
-     * @param $system
-     * @param array $arguments
-     * @return bool|mixed
-     */
-    private function doCall($system, array $arguments = [])
-    {
-        $id = '';
-        $cache = false;
-        $raw = false;
-        $action = "";
-
-        $fixedArguments = $this->standardFindArguments($arguments);
-        extract($fixedArguments, EXTR_OVERWRITE);
-        $action = ($action == "") ? $this->systems[$system]['base_action'] : $action;
-        return $this->find($id, $system, $action, $raw, $cache);
-    }
-
-    /**
-     * @param array $arguments
-     * @return array
-     */
-    private function standardFindArguments(array $arguments)
-    {
-
-        $defaults = [
-            'id' => '',
-            'action' => '',
-            'raw' => false,
-            'cache' => false,
-        ];
-
-        $varNames = array_keys($defaults);
-
-        for ($argumentCount = 0; $argumentCount < 4; $argumentCount++) {
-            if (array_key_exists($argumentCount, $arguments)) {
-                $defaults[$varNames[$argumentCount]] = $arguments[$argumentCount];
-            }
-        }
-        
-        return $defaults;
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @return bool|mixed
-     * @throws \Exception
-     */
-    public static function __callStatic($name, $arguments)
-    {
-        $starCitizens = new StarCitizens();
-        return $starCitizens->__call($name, $arguments);
-    }
-
-
-    /**
-     * Find an entity
+     * Find an entity based on id and return the correct model or raw json output
      *
      * @param $id
      * @param $system
@@ -126,12 +58,12 @@ final class StarCitizens
      * @param bool $cache
      * @return bool|mixed
      */
-    private function find($id, $system, $profileType, $raw = false, $cache = false)
+    private function get($id, $system, $profileType, $raw = false, $cache = false)
     {
         $response = json_decode(
             self::$client
                 ->getResult(
-                    $this->getParams($id, $system, $profileType, $cache)
+                    $this->getCallParams($id, $system, $profileType, $cache)
                 )
                 ->getBody()
                 ->getContents(),
@@ -142,13 +74,15 @@ final class StarCitizens
     }
 
     /**
+     * Returns the params needed for an API call
+     *
      * @param $id
      * @param $system
      * @param $profileType
      * @param $cache
      * @return array
      */
-    private function getParams($id, $system, $profileType, $cache)
+    private function getCallParams($id, $system, $profileType, $cache)
     {
         $cache = ($cache === true) ? "cache" : "live";
 
@@ -165,6 +99,8 @@ final class StarCitizens
     }
 
     /**
+     * Checks the response for success messages and returns the raw response or model
+     *
      * @param $response
      * @param $profileType
      * @param $raw
@@ -195,7 +131,7 @@ final class StarCitizens
     }
 
     /**
-     * Fills our model in with the provided data
+     * Fills our model in with the provided data or sends the data to a store
      *
      * @param $model
      * @param $fillData
@@ -212,5 +148,84 @@ final class StarCitizens
             $object = new \ReflectionClass('StarCitizen\Models' . $model);
             return $object->newInstance($fillData);
         }
+    }
+
+    /**
+     * Magic call function based on the config information
+     *
+     * @param $name
+     * @param $arguments
+     * @return bool|mixed
+     * @throws \Exception
+     */
+    public function __call($name, $arguments)
+    {
+        if (array_key_exists($name, $this->systems)) {
+            return $this->doCall($name, $arguments);
+        }
+
+        throw new \Exception("Method {$name} not found");
+    }
+
+    /**
+     * This is the real call function
+     *
+     * @param $system
+     * @param array $arguments
+     * @return bool|mixed
+     */
+    private function doCall($system, array $arguments = [])
+    {
+        $id = '';
+        $cache = false;
+        $raw = false;
+        $action = "";
+
+        $fixedArguments = $this->standardGetArguments($arguments);
+        extract($fixedArguments, EXTR_OVERWRITE);
+        $action = ($action == "") ? $this->systems[$system]['base_action'] : $action;
+        return $this->get($id, $system, $action, $raw, $cache);
+    }
+
+    /**
+     * Get the standard arguments for a find call and checks that we
+     * have the correct arguments passed to the magic function
+     *
+     * @param array $arguments
+     * @return array
+     */
+    private function standardGetArguments(array $arguments)
+    {
+
+        $defaults = [
+            'id' => '',
+            'action' => '',
+            'raw' => false,
+            'cache' => false,
+        ];
+
+        $varNames = array_keys($defaults);
+
+        for ($argumentCount = 0; $argumentCount < 4; $argumentCount++) {
+            if (array_key_exists($argumentCount, $arguments)) {
+                $defaults[$varNames[$argumentCount]] = $arguments[$argumentCount];
+            }
+        }
+        
+        return $defaults;
+    }
+
+    /**
+     * Allows our functions to be called statically, this is a bit hacky tbh.
+     * 
+     * @param $name
+     * @param $arguments
+     * @return bool|mixed
+     * @throws \Exception
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        $starCitizens = new StarCitizens();
+        return $starCitizens->__call($name, $arguments);
     }
 }
