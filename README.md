@@ -4,8 +4,9 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/stedop/starcitizens/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/stedop/starcitizens/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/stedop/starcitizens/badges/build.png?b=master)](https://scrutinizer-ci.com/g/stedop/starcitizens/build-status/master)
 [![Documentation Status](https://readthedocs.org/projects/starcitizens/badge/?version=latest)](http://starcitizens.readthedocs.org/en/latest/?badge=latest)
-[![Release](https://img.shields.io/github/release/danhanly/signalert.svg?style=flat-square)](https://github.com/stedop/starcitizens/releases)
+[![Release](https://img.shields.io/github/release/stedop/starcitizens?style=flat-square)](https://github.com/stedop/starcitizens/releases)
 [![License](https://img.shields.io/github/license/danhanly/signalert.svg?style=flat-square)](http://choosealicense.com/licenses/gpl-2.0/)
+
 A StarCitizen API wrapper.  Utilises the API from http://sc-api.com
 
 ## Installation
