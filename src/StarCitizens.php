@@ -39,6 +39,7 @@ final class StarCitizens
         $this->configFile = $configFile;
         self::setupClient();
         $this->readConfig();
+        
     }
 
     /**
