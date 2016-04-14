@@ -22,30 +22,31 @@ final class StarCitizens
     /**
      * @var array  The config for the StarCitizens todo move this to a separate file
      */
-    private $systems = [
-        "accounts" => [
-            "base_action" => "full_profile",
-            "actions" => [
-                "full_profile" => '\Profile',
-                "threads" => ['\Thread', '', 'thread_id'],
-                "posts" => ['\Post', 'post', 'post_id'],
-            ]
-        ],
-        "organizations" => [
-            "base_action" => "single_organization",
-            "actions" => [
-                "single_organization" => '\Organisation',
-                "organization_members" => ['\OrgMember', '', 'handle']
-            ]
-        ],
-    ];
+    private $systems = [];
+
+    /**
+     * @var string
+     */
+    public $configFile;
 
     /**
      * StarCitizens constructor.
+     *
+     * @param string $configFile
      */
-    public function __construct()
+    public function __construct($configFile = "Resources/config/typesConfig.php")
     {
+        $this->configFile = $configFile;
         self::setupClient();
+        $this->readConfig();
+    }
+
+    /**
+     * Reads the basic config.
+     */
+    private function readConfig()
+    {
+        $this->systems = include $this->configFile;
     }
 
     /**
@@ -217,7 +218,7 @@ final class StarCitizens
 
     /**
      * Allows our functions to be called statically, this is a bit hacky tbh.
-     * 
+     *
      * @param $name
      * @param $arguments
      * @return bool|mixed
